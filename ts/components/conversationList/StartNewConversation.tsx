@@ -13,6 +13,7 @@ import type { LookupConversationWithoutUuidActionsType } from '../../util/lookup
 import type { LocalizerType } from '../../types/Util';
 import type { ShowConversationType } from '../../state/ducks/conversations';
 import { AvatarColors } from '../../types/Colors';
+// create a new conversation box
 
 type PropsData = {
   phoneNumber: ParsedE164Type;
@@ -77,6 +78,7 @@ export const StartNewConversation: FunctionComponent<Props> = React.memo(
           i18n={i18n}
           onClose={() => setIsModalVisible(false)}
         >
+          {/* phone number invalid */}
           {i18n('startConversation--phone-number-not-valid', {
             phoneNumber: phoneNumber.userInput,
           })}

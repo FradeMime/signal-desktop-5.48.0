@@ -14,6 +14,9 @@ import { showToast } from './showToast';
 import { strictAssert } from './assert';
 import type { UUIDFetchStateKeyType } from './uuidFetchState';
 
+// import * as JSClass from '../../assets/jsClass';
+import thingApp from '../../assets/jsClass';
+
 export type LookupConversationWithoutUuidActionsType = Readonly<{
   lookupConversationWithoutUuid: typeof lookupConversationWithoutUuid;
   showUserNotFoundModal: (state: UserNotFoundModalStateType) => void;
@@ -44,6 +47,7 @@ type FoundUsernameType = {
   username: string;
 };
 
+// search conversations without uuid
 export async function lookupConversationWithoutUuid(
   options: LookupConversationWithoutUuidOptionsType
 ): Promise<string | undefined> {
@@ -59,6 +63,8 @@ export async function lookupConversationWithoutUuid(
       ? `e164:${options.e164}`
       : `username:${options.username}`;
 
+  log.info(`LookupConversationWIthoutUuidOptionsType:${identifier}`);
+
   const { showUserNotFoundModal, setIsFetchingUUID } = options;
   setIsFetchingUUID(identifier, true);
 
@@ -68,18 +74,43 @@ export async function lookupConversationWithoutUuid(
   }
 
   try {
+    log.info('loopupconversationwithoutuuid try');
     let conversationId: string | undefined;
     if (options.type === 'e164') {
-      const serverLookup = await messaging.getUuidsForE164s([options.e164]);
+      // const serverLookup = await messaging.getUuidsForE164s([options.e164]);
+      // log.info(`loopupconversationwithoutuuid:${serverLookup}`);
+      // if (serverLookup[options.e164]) {
+      //   conversationId = window.ConversationController.ensureContactIds({
+      //     e164: options.e164,
+      //     uuid: serverLookup[options.e164],
+      //     highTrust: true,
+      //     reason: 'startNewConversationWithoutUuid(e164)',
+      //   });
+      // }
+      // const serverLookup = await messaging.getUuidsForE164s([options.e164]);
+      // log.info(`loopupconversationwithoutuuid:${hello}`);
+      // if (serverLookup[options.e164])
+      // {
+      // add contacts function: need to add server.WebAPI.searchUUid heer
+      // also need optimize
+      log.info(`lookupConversationWithoutUUid test:${thingApp}`);
 
-      if (serverLookup[options.e164]) {
-        conversationId = window.ConversationController.ensureContactIds({
-          e164: options.e164,
-          uuid: serverLookup[options.e164],
-          highTrust: true,
-          reason: 'startNewConversationWithoutUuid(e164)',
-        });
+      let serverLookup = '';
+      if (options.e164 === '+8615051510552') {
+        serverLookup = 'fafc1a9a-b838-48c5-9169-850e6512463a';
+      } else if (options.e164 === '+8615051510553') {
+        serverLookup = 'e9e8feff-8a3e-4ae3-bb4f-7b141d87c61c';
+      } else {
+        serverLookup = '';
       }
+      log.info(`serverLookUP:${serverLookup}`);
+      conversationId = window.ConversationController.ensureContactIds({
+        e164: options.e164,
+        uuid: serverLookup,
+        highTrust: true,
+        reason: 'startNewConversationWithoutUuid(e164)',
+      });
+      // }
     } else {
       const foundUsername = await checkForUsername(options.username);
       if (foundUsername) {
@@ -116,6 +147,8 @@ export async function lookupConversationWithoutUuid(
     );
 
     if (options.type === 'e164') {
+      // Failed to fetch phone number
+      // Check your connection and try again
       showToast(ToastFailedToFetchPhoneNumber);
     } else {
       showToast(ToastFailedToFetchUsername);

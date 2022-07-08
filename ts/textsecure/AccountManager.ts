@@ -554,7 +554,10 @@ export default class AccountManager extends EventTarget {
     );
 
     const ourUuid = UUID.cast(response.uuid);
-    const ourPni = UUID.cast(response.pni);
+
+    // change Pni to uuid temporary
+    // const ourPni = UUID.cast(response.pni);
+    const ourPni = UUID.cast(response.uuid);
 
     const uuidChanged = previousUuid && ourUuid && previousUuid !== ourUuid;
 

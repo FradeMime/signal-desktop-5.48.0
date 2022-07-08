@@ -1,0 +1,1 @@
+import { SomeInterface } from "./ts_test";

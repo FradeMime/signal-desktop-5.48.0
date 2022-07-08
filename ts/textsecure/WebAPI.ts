@@ -258,7 +258,9 @@ async function _promiseAjax(
       timestamp: Date.now(),
     };
   }
-  const { agent } = agents[cacheKey];
+
+  // agent & ca : change https to http at development environment
+  // const { agent } = agents[cacheKey];
 
   const fetchOptions = {
     method: options.type,
@@ -269,8 +271,8 @@ async function _promiseAjax(
       ...options.headers,
     } as FetchHeaderListType,
     redirect: options.redirect,
-    agent,
-    ca: options.certificateAuthority,
+    // agent,
+    // ca: options.certificateAuthority,
     timeout,
     abortSignal: options.abortSignal,
   };
@@ -293,15 +295,24 @@ async function _promiseAjax(
       fetchOptions.headers['Unidentified-Access-Key'] = accessKey;
     }
   } else if (options.user && options.password) {
-    fetchOptions.headers.Authorization = getBasicAuth({
-      username: options.user,
-      password: options.password,
-    });
+    // accounts/code do not need base64
+    if (options.path === 'v1/accounts/code/888888') {
+      log.info('special url');
+      fetchOptions.headers.Authorization = `Basic ${options.user}:${options.password}`;
+    } else {
+      fetchOptions.headers.Authorization = getBasicAuth({
+        username: options.user,
+        password: options.password,
+      });
+    }
   }
 
   if (options.contentType) {
     fetchOptions.headers['Content-Type'] = options.contentType;
   }
+
+  // print send socket messages
+  log.info(`socket Messages:${JSON.stringify(fetchOptions)}`);
 
   let response: Response;
   let result: string | Uint8Array | Readable | unknown;
@@ -481,7 +492,7 @@ const URL_CALLS = {
   accountExistence: 'v1/accounts/account',
   attachmentId: 'v2/attachments/form/upload',
   attestation: 'v1/attestation',
-  boostBadges: 'v1/subscription/boost/badges',
+  boostBadges: 'v1/subscription/boost/badges', //
   challenge: 'v1/challenge',
   config: 'v1/config',
   deliveryCert: 'v1/certificate/delivery',
@@ -494,7 +505,7 @@ const URL_CALLS = {
   getIceServers: 'v1/accounts/turn',
   getStickerPackUpload: 'v1/sticker/pack/form',
   groupLog: 'v1/groups/logs',
-  groupJoinedAtVersion: 'v1/groups/joined_at_version',
+  groupJoinedAtVersion: 'v1/groups/joined_at_version', //
   groups: 'v1/groups',
   groupsViaLink: 'v1/groups/join/',
   groupToken: 'v1/groups/token',

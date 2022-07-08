@@ -324,7 +324,7 @@ export const getAvatarPath = (): string =>
     '/fixtures/kitten-2-64-64.jpg',
     '/fixtures/kitten-3-64-64.jpg',
   ]) || '';
-
+// default conversation for test show
 export function getDefaultConversation(
   overrideProps: Partial<ConversationType> = {}
 ): ConversationType {
@@ -335,7 +335,7 @@ export function getDefaultConversation(
     acceptedMessageRequest: true,
     avatarPath: getAvatarPath(),
     badges: [],
-    e164: '+1300555000',
+    e164: '+8615000000000',
     conversationColor: ConversationColors[0],
     color: getRandomColor(),
     firstName,

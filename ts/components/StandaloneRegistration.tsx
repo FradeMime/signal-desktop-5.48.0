@@ -8,7 +8,7 @@ import intlTelInput from 'intl-tel-input';
 
 import { strictAssert } from '../util/assert';
 import { parseNumber } from '../util/libphonenumberUtil';
-import { getChallengeURL } from '../challenge';
+// import { getChallengeURL } from '../challenge';
 
 const PhoneInput = ({
   onValidation,
@@ -128,13 +128,14 @@ export const StandaloneRegistration = ({
         return;
       }
 
-      document.location.href = getChallengeURL();
-      if (!window.Signal.challengeHandler) {
-        setError('Captcha handler is not ready!');
-        return;
-      }
-      const token = await window.Signal.challengeHandler.requestCaptcha();
-
+      // 2022-7-1 change
+      // document.location.href = getChallengeURL();
+      // if (!window.Signal.challengeHandler) {
+      //   setError('Captcha handler is not ready!');
+      //   return;
+      // }
+      // const token = await window.Signal.challengeHandler.requestCaptcha();
+      const token = 'leiqiu_Token';
       try {
         requestVerification(type, number, token);
         setError(undefined);

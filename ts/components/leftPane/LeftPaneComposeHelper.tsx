@@ -117,6 +117,8 @@ export class LeftPaneComposeHelper extends LeftPaneHelper<LeftPaneComposePropsTy
     return showInbox;
   }
 
+  // new Conversation box:
+  // get search bar input
   override getSearchInput({
     i18n,
     onChangeComposeSearchTerm,
@@ -138,6 +140,8 @@ export class LeftPaneComposeHelper extends LeftPaneHelper<LeftPaneComposePropsTy
     );
   }
 
+  // new Conversation box:
+  // search bar get none contact
   override getPreRowsNode({
     i18n,
   }: Readonly<{

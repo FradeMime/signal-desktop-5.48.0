@@ -32,6 +32,9 @@ import {
 } from '../selectors/user';
 import { strictAssert } from '../../util/assert';
 import { SELECTED_CONVERSATION_CHANGED } from './conversations';
+import * as log from '../../logging/log';
+
+// search bar functions
 
 const {
   searchMessages: dataSearchMessages,
@@ -297,6 +300,7 @@ async function queryConversationsAndContacts(
 
   // Inject synthetic Note to Self entry if query matches localized 'Note to Self'
   if (noteToSelf.indexOf(query.toLowerCase()) !== -1) {
+    log.info('search test queryConversationsAndContacts');
     // ensure that we don't have duplicates in our results
     contactIds = contactIds.filter(id => id !== ourConversationId);
     conversationIds = conversationIds.filter(id => id !== ourConversationId);

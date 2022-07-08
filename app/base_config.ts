@@ -7,6 +7,12 @@ import { get } from 'lodash';
 import { set } from 'lodash/fp';
 import { strictAssert } from '../ts/util/assert';
 
+// import thingFuncA from '../assets/jsClass';
+// import { readyForShutdown1 } from '../assets/tsClass';
+// import { thingApp } from '../assets/jsClass';
+// eslint-disable-next-line import/extensions
+// import hello from '../assets/ts_test';
+
 const ENCODING = 'utf8';
 
 type InternalConfigType = Record<string, unknown>;
@@ -29,6 +35,7 @@ export function start({
   targetPath: string;
   throwOnFilesystemErrors: boolean;
 }>): ConfigType {
+  // hello();
   let cachedValue: InternalConfigType = Object.create(null);
   let incomingJson: string | undefined;
 

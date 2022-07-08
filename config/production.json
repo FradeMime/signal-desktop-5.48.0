@@ -1,5 +1,5 @@
 {
-  "serverUrl": "https://chat.signal.org",
+  "serverUrl": "http://124.232.156.201:28810",
   "storageUrl": "https://storage.signal.org",
   "directoryVersion": 1,
   "directoryUrl": "https://api.directory.signal.org",

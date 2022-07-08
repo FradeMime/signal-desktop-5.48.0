@@ -2669,6 +2669,7 @@ export async function startApp(): Promise<void> {
     window.Whisper.events.trigger('contactSync:complete');
   }
 
+  // this maybe received new contact
   async function onContactReceived(ev: ContactEvent) {
     const details = ev.contactDetails;
 
