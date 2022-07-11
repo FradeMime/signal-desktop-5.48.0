@@ -1,0 +1,22 @@
+var import_chai = require("chai");
+var import_formatCountForLogging = require("../../logging/formatCountForLogging");
+describe("formatCountForLogging", () => {
+  it('returns "0" if passed zero', () => {
+    import_chai.assert.strictEqual((0, import_formatCountForLogging.formatCountForLogging)(0), "0");
+  });
+  it('returns "NaN" if passed NaN', () => {
+    import_chai.assert.strictEqual((0, import_formatCountForLogging.formatCountForLogging)(0 / 0), "NaN");
+  });
+  it('returns "at least X", where X is a power of 10, for other numbers', () => {
+    import_chai.assert.strictEqual((0, import_formatCountForLogging.formatCountForLogging)(1), "at least 1");
+    import_chai.assert.strictEqual((0, import_formatCountForLogging.formatCountForLogging)(2), "at least 1");
+    import_chai.assert.strictEqual((0, import_formatCountForLogging.formatCountForLogging)(9), "at least 1");
+    import_chai.assert.strictEqual((0, import_formatCountForLogging.formatCountForLogging)(10), "at least 10");
+    import_chai.assert.strictEqual((0, import_formatCountForLogging.formatCountForLogging)(99), "at least 10");
+    import_chai.assert.strictEqual((0, import_formatCountForLogging.formatCountForLogging)(100), "at least 100");
+    import_chai.assert.strictEqual((0, import_formatCountForLogging.formatCountForLogging)(999), "at least 100");
+    import_chai.assert.strictEqual((0, import_formatCountForLogging.formatCountForLogging)(1e3), "at least 1000");
+    import_chai.assert.strictEqual((0, import_formatCountForLogging.formatCountForLogging)(9999), "at least 1000");
+  });
+});
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiZm9ybWF0Q291bnRGb3JMb2dnaW5nX3Rlc3QudHMiXSwKICAic291cmNlc0NvbnRlbnQiOiBbIi8vIENvcHlyaWdodCAyMDIxIFNpZ25hbCBNZXNzZW5nZXIsIExMQ1xuLy8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEFHUEwtMy4wLW9ubHlcblxuaW1wb3J0IHsgYXNzZXJ0IH0gZnJvbSAnY2hhaSc7XG5cbmltcG9ydCB7IGZvcm1hdENvdW50Rm9yTG9nZ2luZyB9IGZyb20gJy4uLy4uL2xvZ2dpbmcvZm9ybWF0Q291bnRGb3JMb2dnaW5nJztcblxuZGVzY3JpYmUoJ2Zvcm1hdENvdW50Rm9yTG9nZ2luZycsICgpID0+IHtcbiAgaXQoJ3JldHVybnMgXCIwXCIgaWYgcGFzc2VkIHplcm8nLCAoKSA9PiB7XG4gICAgYXNzZXJ0LnN0cmljdEVxdWFsKGZvcm1hdENvdW50Rm9yTG9nZ2luZygwKSwgJzAnKTtcbiAgfSk7XG5cbiAgaXQoJ3JldHVybnMgXCJOYU5cIiBpZiBwYXNzZWQgTmFOJywgKCkgPT4ge1xuICAgIGFzc2VydC5zdHJpY3RFcXVhbChmb3JtYXRDb3VudEZvckxvZ2dpbmcoMCAvIDApLCAnTmFOJyk7XG4gIH0pO1xuXG4gIGl0KCdyZXR1cm5zIFwiYXQgbGVhc3QgWFwiLCB3aGVyZSBYIGlzIGEgcG93ZXIgb2YgMTAsIGZvciBvdGhlciBudW1iZXJzJywgKCkgPT4ge1xuICAgIGFzc2VydC5zdHJpY3RFcXVhbChmb3JtYXRDb3VudEZvckxvZ2dpbmcoMSksICdhdCBsZWFzdCAxJyk7XG4gICAgYXNzZXJ0LnN0cmljdEVxdWFsKGZvcm1hdENvdW50Rm9yTG9nZ2luZygyKSwgJ2F0IGxlYXN0IDEnKTtcbiAgICBhc3NlcnQuc3RyaWN0RXF1YWwoZm9ybWF0Q291bnRGb3JMb2dnaW5nKDkpLCAnYXQgbGVhc3QgMScpO1xuICAgIGFzc2VydC5zdHJpY3RFcXVhbChmb3JtYXRDb3VudEZvckxvZ2dpbmcoMTApLCAnYXQgbGVhc3QgMTAnKTtcbiAgICBhc3NlcnQuc3RyaWN0RXF1YWwoZm9ybWF0Q291bnRGb3JMb2dnaW5nKDk5KSwgJ2F0IGxlYXN0IDEwJyk7XG4gICAgYXNzZXJ0LnN0cmljdEVxdWFsKGZvcm1hdENvdW50Rm9yTG9nZ2luZygxMDApLCAnYXQgbGVhc3QgMTAwJyk7XG4gICAgYXNzZXJ0LnN0cmljdEVxdWFsKGZvcm1hdENvdW50Rm9yTG9nZ2luZyg5OTkpLCAnYXQgbGVhc3QgMTAwJyk7XG4gICAgYXNzZXJ0LnN0cmljdEVxdWFsKGZvcm1hdENvdW50Rm9yTG9nZ2luZygxMDAwKSwgJ2F0IGxlYXN0IDEwMDAnKTtcbiAgICBhc3NlcnQuc3RyaWN0RXF1YWwoZm9ybWF0Q291bnRGb3JMb2dnaW5nKDk5OTkpLCAnYXQgbGVhc3QgMTAwMCcpO1xuICB9KTtcbn0pO1xuIl0sCiAgIm1hcHBpbmdzIjogIkFBR0Esa0JBQXVCO0FBRXZCLG1DQUFzQztBQUV0QyxTQUFTLHlCQUF5QixNQUFNO0FBQ3RDLEtBQUcsOEJBQThCLE1BQU07QUFDckMsdUJBQU8sWUFBWSx3REFBc0IsQ0FBQyxHQUFHLEdBQUc7QUFBQSxFQUNsRCxDQUFDO0FBRUQsS0FBRywrQkFBK0IsTUFBTTtBQUN0Qyx1QkFBTyxZQUFZLHdEQUFzQixJQUFJLENBQUMsR0FBRyxLQUFLO0FBQUEsRUFDeEQsQ0FBQztBQUVELEtBQUcscUVBQXFFLE1BQU07QUFDNUUsdUJBQU8sWUFBWSx3REFBc0IsQ0FBQyxHQUFHLFlBQVk7QUFDekQsdUJBQU8sWUFBWSx3REFBc0IsQ0FBQyxHQUFHLFlBQVk7QUFDekQsdUJBQU8sWUFBWSx3REFBc0IsQ0FBQyxHQUFHLFlBQVk7QUFDekQsdUJBQU8sWUFBWSx3REFBc0IsRUFBRSxHQUFHLGFBQWE7QUFDM0QsdUJBQU8sWUFBWSx3REFBc0IsRUFBRSxHQUFHLGFBQWE7QUFDM0QsdUJBQU8sWUFBWSx3REFBc0IsR0FBRyxHQUFHLGNBQWM7QUFDN0QsdUJBQU8sWUFBWSx3REFBc0IsR0FBRyxHQUFHLGNBQWM7QUFDN0QsdUJBQU8sWUFBWSx3REFBc0IsR0FBSSxHQUFHLGVBQWU7QUFDL0QsdUJBQU8sWUFBWSx3REFBc0IsSUFBSSxHQUFHLGVBQWU7QUFBQSxFQUNqRSxDQUFDO0FBQ0gsQ0FBQzsiLAogICJuYW1lcyI6IFtdCn0K

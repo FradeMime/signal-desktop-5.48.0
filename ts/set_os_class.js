@@ -1,0 +1,14 @@
+{
+  let className;
+  if (window.SignalContext.OS.isWindows()) {
+    className = "os-windows";
+  } else if (window.SignalContext.OS.isMacOS()) {
+    className = "os-macos";
+  } else if (window.SignalContext.OS.isLinux()) {
+    className = "os-linux";
+  } else {
+    throw new Error("Unexpected operating system; not applying ");
+  }
+  document.body.classList.add(className);
+}
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsic2V0X29zX2NsYXNzLnRzIl0sCiAgInNvdXJjZXNDb250ZW50IjogWyIvLyBDb3B5cmlnaHQgMjAyMSBTaWduYWwgTWVzc2VuZ2VyLCBMTENcbi8vIFNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBBR1BMLTMuMC1vbmx5XG5cbntcbiAgbGV0IGNsYXNzTmFtZTogc3RyaW5nO1xuICBpZiAod2luZG93LlNpZ25hbENvbnRleHQuT1MuaXNXaW5kb3dzKCkpIHtcbiAgICBjbGFzc05hbWUgPSAnb3Mtd2luZG93cyc7XG4gIH0gZWxzZSBpZiAod2luZG93LlNpZ25hbENvbnRleHQuT1MuaXNNYWNPUygpKSB7XG4gICAgY2xhc3NOYW1lID0gJ29zLW1hY29zJztcbiAgfSBlbHNlIGlmICh3aW5kb3cuU2lnbmFsQ29udGV4dC5PUy5pc0xpbnV4KCkpIHtcbiAgICBjbGFzc05hbWUgPSAnb3MtbGludXgnO1xuICB9IGVsc2Uge1xuICAgIHRocm93IG5ldyBFcnJvcignVW5leHBlY3RlZCBvcGVyYXRpbmcgc3lzdGVtOyBub3QgYXBwbHlpbmcgJyk7XG4gIH1cblxuICBkb2N1bWVudC5ib2R5LmNsYXNzTGlzdC5hZGQoY2xhc3NOYW1lKTtcbn1cbiJdLAogICJtYXBwaW5ncyI6ICJBQUdBO0FBQ0UsTUFBSTtBQUNKLE1BQUksT0FBTyxjQUFjLEdBQUcsVUFBVSxHQUFHO0FBQ3ZDLGdCQUFZO0FBQUEsRUFDZCxXQUFXLE9BQU8sY0FBYyxHQUFHLFFBQVEsR0FBRztBQUM1QyxnQkFBWTtBQUFBLEVBQ2QsV0FBVyxPQUFPLGNBQWMsR0FBRyxRQUFRLEdBQUc7QUFDNUMsZ0JBQVk7QUFBQSxFQUNkLE9BQU87QUFDTCxVQUFNLElBQUksTUFBTSw0Q0FBNEM7QUFBQSxFQUM5RDtBQUVBLFdBQVMsS0FBSyxVQUFVLElBQUksU0FBUztBQUN2QzsiLAogICJuYW1lcyI6IFtdCn0K

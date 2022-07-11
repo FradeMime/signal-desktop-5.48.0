@@ -1,0 +1,193 @@
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+var Colors_exports = {};
+__export(Colors_exports, {
+  AvatarColorMap: () => AvatarColorMap,
+  AvatarColors: () => AvatarColors,
+  ContactNameColors: () => ContactNameColors,
+  ConversationColors: () => ConversationColors,
+  DEFAULT_CONVERSATION_COLOR: () => DEFAULT_CONVERSATION_COLOR,
+  getAvatarColor: () => getAvatarColor
+});
+module.exports = __toCommonJS(Colors_exports);
+const AvatarColorMap = /* @__PURE__ */ new Map([
+  [
+    "A100",
+    {
+      bg: "#e3e3fe",
+      fg: "#3838f5"
+    }
+  ],
+  [
+    "A110",
+    {
+      bg: "#dde7fc",
+      fg: "#1251d3"
+    }
+  ],
+  [
+    "A120",
+    {
+      bg: "#d8e8f0",
+      fg: "#086da0"
+    }
+  ],
+  [
+    "A130",
+    {
+      bg: "#cde4cd",
+      fg: "#067906"
+    }
+  ],
+  [
+    "A140",
+    {
+      bg: "#eae0fd",
+      fg: "#661aff"
+    }
+  ],
+  [
+    "A150",
+    {
+      bg: "#f5e3fe",
+      fg: "#9f00f0"
+    }
+  ],
+  [
+    "A160",
+    {
+      bg: "#f6d8ec",
+      fg: "#b8057c"
+    }
+  ],
+  [
+    "A170",
+    {
+      bg: "#f5d7d7",
+      fg: "#be0404"
+    }
+  ],
+  [
+    "A180",
+    {
+      bg: "#fef5d0",
+      fg: "#836b01"
+    }
+  ],
+  [
+    "A190",
+    {
+      bg: "#eae6d5",
+      fg: "#7d6f40"
+    }
+  ],
+  [
+    "A200",
+    {
+      bg: "#d2d2dc",
+      fg: "#4f4f6d"
+    }
+  ],
+  [
+    "A210",
+    {
+      bg: "#d7d7d9",
+      fg: "#5c5c5c"
+    }
+  ]
+]);
+const AvatarColors = Array.from(AvatarColorMap.keys());
+const ConversationColors = [
+  "ultramarine",
+  "crimson",
+  "vermilion",
+  "burlap",
+  "forest",
+  "wintergreen",
+  "teal",
+  "blue",
+  "indigo",
+  "violet",
+  "plum",
+  "taupe",
+  "steel",
+  "ember",
+  "midnight",
+  "infrared",
+  "lagoon",
+  "fluorescent",
+  "basil",
+  "sublime",
+  "sea",
+  "tangerine"
+];
+const ContactNameColors = [
+  "200",
+  "120",
+  "300",
+  "010",
+  "210",
+  "330",
+  "230",
+  "180",
+  "030",
+  "340",
+  "270",
+  "090",
+  "000",
+  "150",
+  "240",
+  "040",
+  "160",
+  "280",
+  "080",
+  "320",
+  "020",
+  "140",
+  "260",
+  "060",
+  "350",
+  "100",
+  "290",
+  "130",
+  "220",
+  "050",
+  "170",
+  "250",
+  "070",
+  "190",
+  "310",
+  "110"
+];
+const DEFAULT_CONVERSATION_COLOR = {
+  color: "ultramarine"
+};
+function getAvatarColor(color) {
+  return color || AvatarColors[0];
+}
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  AvatarColorMap,
+  AvatarColors,
+  ContactNameColors,
+  ConversationColors,
+  DEFAULT_CONVERSATION_COLOR,
+  getAvatarColor
+});
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiQ29sb3JzLnRzIl0sCiAgInNvdXJjZXNDb250ZW50IjogWyIvLyBDb3B5cmlnaHQgMjAyMC0yMDIyIFNpZ25hbCBNZXNzZW5nZXIsIExMQ1xuLy8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEFHUEwtMy4wLW9ubHlcblxuZXhwb3J0IGNvbnN0IEF2YXRhckNvbG9yTWFwID0gbmV3IE1hcChbXG4gIFtcbiAgICAnQTEwMCcsXG4gICAge1xuICAgICAgYmc6ICcjZTNlM2ZlJyxcbiAgICAgIGZnOiAnIzM4MzhmNScsXG4gICAgfSxcbiAgXSxcbiAgW1xuICAgICdBMTEwJyxcbiAgICB7XG4gICAgICBiZzogJyNkZGU3ZmMnLFxuICAgICAgZmc6ICcjMTI1MWQzJyxcbiAgICB9LFxuICBdLFxuICBbXG4gICAgJ0ExMjAnLFxuICAgIHtcbiAgICAgIGJnOiAnI2Q4ZThmMCcsXG4gICAgICBmZzogJyMwODZkYTAnLFxuICAgIH0sXG4gIF0sXG4gIFtcbiAgICAnQTEzMCcsXG4gICAge1xuICAgICAgYmc6ICcjY2RlNGNkJyxcbiAgICAgIGZnOiAnIzA2NzkwNicsXG4gICAgfSxcbiAgXSxcbiAgW1xuICAgICdBMTQwJyxcbiAgICB7XG4gICAgICBiZzogJyNlYWUwZmQnLFxuICAgICAgZmc6ICcjNjYxYWZmJyxcbiAgICB9LFxuICBdLFxuICBbXG4gICAgJ0ExNTAnLFxuICAgIHtcbiAgICAgIGJnOiAnI2Y1ZTNmZScsXG4gICAgICBmZzogJyM5ZjAwZjAnLFxuICAgIH0sXG4gIF0sXG4gIFtcbiAgICAnQTE2MCcsXG4gICAge1xuICAgICAgYmc6ICcjZjZkOGVjJyxcbiAgICAgIGZnOiAnI2I4MDU3YycsXG4gICAgfSxcbiAgXSxcbiAgW1xuICAgICdBMTcwJyxcbiAgICB7XG4gICAgICBiZzogJyNmNWQ3ZDcnLFxuICAgICAgZmc6ICcjYmUwNDA0JyxcbiAgICB9LFxuICBdLFxuICBbXG4gICAgJ0ExODAnLFxuICAgIHtcbiAgICAgIGJnOiAnI2ZlZjVkMCcsXG4gICAgICBmZzogJyM4MzZiMDEnLFxuICAgIH0sXG4gIF0sXG4gIFtcbiAgICAnQTE5MCcsXG4gICAge1xuICAgICAgYmc6ICcjZWFlNmQ1JyxcbiAgICAgIGZnOiAnIzdkNmY0MCcsXG4gICAgfSxcbiAgXSxcbiAgW1xuICAgICdBMjAwJyxcbiAgICB7XG4gICAgICBiZzogJyNkMmQyZGMnLFxuICAgICAgZmc6ICcjNGY0ZjZkJyxcbiAgICB9LFxuICBdLFxuICBbXG4gICAgJ0EyMTAnLFxuICAgIHtcbiAgICAgIGJnOiAnI2Q3ZDdkOScsXG4gICAgICBmZzogJyM1YzVjNWMnLFxuICAgIH0sXG4gIF0sXG5dKTtcblxuZXhwb3J0IGNvbnN0IEF2YXRhckNvbG9ycyA9IEFycmF5LmZyb20oQXZhdGFyQ29sb3JNYXAua2V5cygpKTtcblxuZXhwb3J0IGNvbnN0IENvbnZlcnNhdGlvbkNvbG9ycyA9IFtcbiAgJ3VsdHJhbWFyaW5lJyxcbiAgJ2NyaW1zb24nLFxuICAndmVybWlsaW9uJyxcbiAgJ2J1cmxhcCcsXG4gICdmb3Jlc3QnLFxuICAnd2ludGVyZ3JlZW4nLFxuICAndGVhbCcsXG4gICdibHVlJyxcbiAgJ2luZGlnbycsXG4gICd2aW9sZXQnLFxuICAncGx1bScsXG4gICd0YXVwZScsXG4gICdzdGVlbCcsXG4gICdlbWJlcicsXG4gICdtaWRuaWdodCcsXG4gICdpbmZyYXJlZCcsXG4gICdsYWdvb24nLFxuICAnZmx1b3Jlc2NlbnQnLFxuICAnYmFzaWwnLFxuICAnc3VibGltZScsXG4gICdzZWEnLFxuICAndGFuZ2VyaW5lJyxcbl0gYXMgY29uc3Q7XG5cbmV4cG9ydCBjb25zdCBDb250YWN0TmFtZUNvbG9ycyA9IFtcbiAgJzIwMCcsXG4gICcxMjAnLFxuICAnMzAwJyxcbiAgJzAxMCcsXG4gICcyMTAnLFxuICAnMzMwJyxcbiAgJzIzMCcsXG4gICcxODAnLFxuICAnMDMwJyxcbiAgJzM0MCcsXG4gICcyNzAnLFxuICAnMDkwJyxcbiAgJzAwMCcsXG4gICcxNTAnLFxuICAnMjQwJyxcbiAgJzA0MCcsXG4gICcxNjAnLFxuICAnMjgwJyxcbiAgJzA4MCcsXG4gICczMjAnLFxuICAnMDIwJyxcbiAgJzE0MCcsXG4gICcyNjAnLFxuICAnMDYwJyxcbiAgJzM1MCcsXG4gICcxMDAnLFxuICAnMjkwJyxcbiAgJzEzMCcsXG4gICcyMjAnLFxuICAnMDUwJyxcbiAgJzE3MCcsXG4gICcyNTAnLFxuICAnMDcwJyxcbiAgJzE5MCcsXG4gICczMTAnLFxuICAnMTEwJyxcbl07XG5cbmV4cG9ydCB0eXBlIENvbnRhY3ROYW1lQ29sb3JUeXBlID0gdHlwZW9mIENvbnRhY3ROYW1lQ29sb3JzW251bWJlcl07XG5cbmV4cG9ydCB0eXBlIEN1c3RvbUNvbG9yVHlwZSA9IHtcbiAgc3RhcnQ6IHsgaHVlOiBudW1iZXI7IHNhdHVyYXRpb246IG51bWJlciB9O1xuICBlbmQ/OiB7IGh1ZTogbnVtYmVyOyBzYXR1cmF0aW9uOiBudW1iZXIgfTtcbiAgZGVnPzogbnVtYmVyO1xufTtcblxuZXhwb3J0IHR5cGUgQXZhdGFyQ29sb3JUeXBlID0gdHlwZW9mIEF2YXRhckNvbG9yc1tudW1iZXJdO1xuXG5leHBvcnQgdHlwZSBDb252ZXJzYXRpb25Db2xvclR5cGUgPVxuICB8IHR5cGVvZiBDb252ZXJzYXRpb25Db2xvcnNbbnVtYmVyXVxuICB8ICdjdXN0b20nO1xuXG5leHBvcnQgdHlwZSBEZWZhdWx0Q29udmVyc2F0aW9uQ29sb3JUeXBlID0ge1xuICBjb2xvcjogQ29udmVyc2F0aW9uQ29sb3JUeXBlO1xuICBjdXN0b21Db2xvckRhdGE/OiB7XG4gICAgaWQ6IHN0cmluZztcbiAgICB2YWx1ZTogQ3VzdG9tQ29sb3JUeXBlO1xuICB9O1xufTtcblxuZXhwb3J0IGNvbnN0IERFRkFVTFRfQ09OVkVSU0FUSU9OX0NPTE9SOiBEZWZhdWx0Q29udmVyc2F0aW9uQ29sb3JUeXBlID0ge1xuICBjb2xvcjogJ3VsdHJhbWFyaW5lJyxcbn07XG5cbmV4cG9ydCB0eXBlIEN1c3RvbUNvbG9yc0l0ZW1UeXBlID0ge1xuICByZWFkb25seSBjb2xvcnM6IFJlY29yZDxzdHJpbmcsIEN1c3RvbUNvbG9yVHlwZT47XG4gIHJlYWRvbmx5IHZlcnNpb246IG51bWJlcjtcbn07XG5cbmV4cG9ydCBmdW5jdGlvbiBnZXRBdmF0YXJDb2xvcihjb2xvcj86IEF2YXRhckNvbG9yVHlwZSk6IEF2YXRhckNvbG9yVHlwZSB7XG4gIHJldHVybiBjb2xvciB8fCBBdmF0YXJDb2xvcnNbMF07XG59XG4iXSwKICAibWFwcGluZ3MiOiAiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUdPLE1BQU0saUJBQWlCLG9CQUFJLElBQUk7QUFBQSxFQUNwQztBQUFBLElBQ0U7QUFBQSxJQUNBO0FBQUEsTUFDRSxJQUFJO0FBQUEsTUFDSixJQUFJO0FBQUEsSUFDTjtBQUFBLEVBQ0Y7QUFBQSxFQUNBO0FBQUEsSUFDRTtBQUFBLElBQ0E7QUFBQSxNQUNFLElBQUk7QUFBQSxNQUNKLElBQUk7QUFBQSxJQUNOO0FBQUEsRUFDRjtBQUFBLEVBQ0E7QUFBQSxJQUNFO0FBQUEsSUFDQTtBQUFBLE1BQ0UsSUFBSTtBQUFBLE1BQ0osSUFBSTtBQUFBLElBQ047QUFBQSxFQUNGO0FBQUEsRUFDQTtBQUFBLElBQ0U7QUFBQSxJQUNBO0FBQUEsTUFDRSxJQUFJO0FBQUEsTUFDSixJQUFJO0FBQUEsSUFDTjtBQUFBLEVBQ0Y7QUFBQSxFQUNBO0FBQUEsSUFDRTtBQUFBLElBQ0E7QUFBQSxNQUNFLElBQUk7QUFBQSxNQUNKLElBQUk7QUFBQSxJQUNOO0FBQUEsRUFDRjtBQUFBLEVBQ0E7QUFBQSxJQUNFO0FBQUEsSUFDQTtBQUFBLE1BQ0UsSUFBSTtBQUFBLE1BQ0osSUFBSTtBQUFBLElBQ047QUFBQSxFQUNGO0FBQUEsRUFDQTtBQUFBLElBQ0U7QUFBQSxJQUNBO0FBQUEsTUFDRSxJQUFJO0FBQUEsTUFDSixJQUFJO0FBQUEsSUFDTjtBQUFBLEVBQ0Y7QUFBQSxFQUNBO0FBQUEsSUFDRTtBQUFBLElBQ0E7QUFBQSxNQUNFLElBQUk7QUFBQSxNQUNKLElBQUk7QUFBQSxJQUNOO0FBQUEsRUFDRjtBQUFBLEVBQ0E7QUFBQSxJQUNFO0FBQUEsSUFDQTtBQUFBLE1BQ0UsSUFBSTtBQUFBLE1BQ0osSUFBSTtBQUFBLElBQ047QUFBQSxFQUNGO0FBQUEsRUFDQTtBQUFBLElBQ0U7QUFBQSxJQUNBO0FBQUEsTUFDRSxJQUFJO0FBQUEsTUFDSixJQUFJO0FBQUEsSUFDTjtBQUFBLEVBQ0Y7QUFBQSxFQUNBO0FBQUEsSUFDRTtBQUFBLElBQ0E7QUFBQSxNQUNFLElBQUk7QUFBQSxNQUNKLElBQUk7QUFBQSxJQUNOO0FBQUEsRUFDRjtBQUFBLEVBQ0E7QUFBQSxJQUNFO0FBQUEsSUFDQTtBQUFBLE1BQ0UsSUFBSTtBQUFBLE1BQ0osSUFBSTtBQUFBLElBQ047QUFBQSxFQUNGO0FBQ0YsQ0FBQztBQUVNLE1BQU0sZUFBZSxNQUFNLEtBQUssZUFBZSxLQUFLLENBQUM7QUFFckQsTUFBTSxxQkFBcUI7QUFBQSxFQUNoQztBQUFBLEVBQ0E7QUFBQSxFQUNBO0FBQUEsRUFDQTtBQUFBLEVBQ0E7QUFBQSxFQUNBO0FBQUEsRUFDQTtBQUFBLEVBQ0E7QUFBQSxFQUNBO0FBQUEsRUFDQTtBQUFBLEVBQ0E7QUFBQSxFQUNBO0FBQUEsRUFDQTtBQUFBLEVBQ0E7QUFBQSxFQUNBO0FBQUEsRUFDQTtBQUFBLEVBQ0E7QUFBQSxFQUNBO0FBQUEsRUFDQTtBQUFBLEVBQ0E7QUFBQSxFQUNBO0FBQUEsRUFDQTtBQUNGO0FBRU8sTUFBTSxvQkFBb0I7QUFBQSxFQUMvQjtBQUFBLEVBQ0E7QUFBQSxFQUNBO0FBQUEsRUFDQTtBQUFBLEVBQ0E7QUFBQSxFQUNBO0FBQUEsRUFDQTtBQUFBLEVBQ0E7QUFBQSxFQUNBO0FBQUEsRUFDQTtBQUFBLEVBQ0E7QUFBQSxFQUNBO0FBQUEsRUFDQTtBQUFBLEVBQ0E7QUFBQSxFQUNBO0FBQUEsRUFDQTtBQUFBLEVBQ0E7QUFBQSxFQUNBO0FBQUEsRUFDQTtBQUFBLEVBQ0E7QUFBQSxFQUNBO0FBQUEsRUFDQTtBQUFBLEVBQ0E7QUFBQSxFQUNBO0FBQUEsRUFDQTtBQUFBLEVBQ0E7QUFBQSxFQUNBO0FBQUEsRUFDQTtBQUFBLEVBQ0E7QUFBQSxFQUNBO0FBQUEsRUFDQTtBQUFBLEVBQ0E7QUFBQSxFQUNBO0FBQUEsRUFDQTtBQUFBLEVBQ0E7QUFBQSxFQUNBO0FBQ0Y7QUF3Qk8sTUFBTSw2QkFBMkQ7QUFBQSxFQUN0RSxPQUFPO0FBQ1Q7QUFPTyx3QkFBd0IsT0FBMEM7QUFDdkUsU0FBTyxTQUFTLGFBQWE7QUFDL0I7QUFGZ0IiLAogICJuYW1lcyI6IFtdCn0K

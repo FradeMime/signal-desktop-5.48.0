@@ -1,0 +1,101 @@
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target, mod));
+var import_chai = require("chai");
+var sinon = __toESM(require("sinon"));
+var import_SystemTraySetting = require("../../types/SystemTraySetting");
+var import_SystemTraySettingCache = require("../../../app/SystemTraySettingCache");
+describe("SystemTraySettingCache", () => {
+  let sandbox;
+  let sqlCallStub;
+  let configGetStub;
+  let configSetStub;
+  let sql;
+  let config;
+  beforeEach(() => {
+    sandbox = sinon.createSandbox();
+    sqlCallStub = sandbox.stub().resolves();
+    sql = { sqlCall: sqlCallStub };
+    configGetStub = sandbox.stub().returns(void 0);
+    configSetStub = sandbox.stub().returns(void 0);
+    config = { get: configGetStub, set: configSetStub };
+  });
+  afterEach(() => {
+    sandbox.restore();
+  });
+  it("returns MinimizeToAndStartInSystemTray if passed the --start-in-tray argument", async () => {
+    const justOneArg = new import_SystemTraySettingCache.SystemTraySettingCache(sql, config, ["--start-in-tray"], "1.2.3");
+    import_chai.assert.strictEqual(await justOneArg.get(), import_SystemTraySetting.SystemTraySetting.MinimizeToAndStartInSystemTray);
+    const bothArgs = new import_SystemTraySettingCache.SystemTraySettingCache(sql, config, ["--start-in-tray", "--use-tray-icon"], "1.2.3");
+    import_chai.assert.strictEqual(await bothArgs.get(), import_SystemTraySetting.SystemTraySetting.MinimizeToAndStartInSystemTray);
+    sinon.assert.notCalled(sqlCallStub);
+    sinon.assert.notCalled(configGetStub);
+    sinon.assert.notCalled(configSetStub);
+  });
+  it("returns MinimizeToSystemTray if passed the --use-tray-icon argument", async () => {
+    const cache = new import_SystemTraySettingCache.SystemTraySettingCache(sql, config, ["--use-tray-icon"], "1.2.3");
+    import_chai.assert.strictEqual(await cache.get(), import_SystemTraySetting.SystemTraySetting.MinimizeToSystemTray);
+    sinon.assert.notCalled(sqlCallStub);
+    sinon.assert.notCalled(configGetStub);
+    sinon.assert.notCalled(configSetStub);
+  });
+  it("returns DoNotUseSystemTray if system tray is supported but no preference is stored", async () => {
+    sandbox.stub(process, "platform").value("win32");
+    const cache = new import_SystemTraySettingCache.SystemTraySettingCache(sql, config, [], "1.2.3");
+    import_chai.assert.strictEqual(await cache.get(), import_SystemTraySetting.SystemTraySetting.DoNotUseSystemTray);
+    (0, import_chai.assert)(configGetStub.calledOnceWith("system-tray-setting"));
+    (0, import_chai.assert)(configSetStub.calledOnceWith("system-tray-setting", import_SystemTraySetting.SystemTraySetting.DoNotUseSystemTray));
+  });
+  it("returns DoNotUseSystemTray if system tray is supported but the stored preference is invalid", async () => {
+    sandbox.stub(process, "platform").value("win32");
+    sqlCallStub.resolves({ value: "garbage" });
+    const cache = new import_SystemTraySettingCache.SystemTraySettingCache(sql, config, [], "1.2.3");
+    import_chai.assert.strictEqual(await cache.get(), import_SystemTraySetting.SystemTraySetting.DoNotUseSystemTray);
+    (0, import_chai.assert)(configGetStub.calledOnceWith("system-tray-setting"));
+    (0, import_chai.assert)(configSetStub.calledOnceWith("system-tray-setting", import_SystemTraySetting.SystemTraySetting.DoNotUseSystemTray));
+  });
+  it("returns the stored preference if system tray is supported and something is stored", async () => {
+    sandbox.stub(process, "platform").value("win32");
+    sqlCallStub.resolves({ value: "MinimizeToSystemTray" });
+    const cache = new import_SystemTraySettingCache.SystemTraySettingCache(sql, config, [], "1.2.3");
+    import_chai.assert.strictEqual(await cache.get(), import_SystemTraySetting.SystemTraySetting.MinimizeToSystemTray);
+    (0, import_chai.assert)(configGetStub.calledOnceWith("system-tray-setting"));
+    (0, import_chai.assert)(configSetStub.calledOnceWith("system-tray-setting", import_SystemTraySetting.SystemTraySetting.MinimizeToSystemTray));
+  });
+  it("returns the cached preference if system tray is supported and something is stored", async () => {
+    sandbox.stub(process, "platform").value("win32");
+    configGetStub.returns("MinimizeToSystemTray");
+    const cache = new import_SystemTraySettingCache.SystemTraySettingCache(sql, config, [], "1.2.3");
+    import_chai.assert.strictEqual(await cache.get(), import_SystemTraySetting.SystemTraySetting.MinimizeToSystemTray);
+    (0, import_chai.assert)(configGetStub.calledOnceWith("system-tray-setting"));
+    sinon.assert.notCalled(sqlCallStub);
+  });
+  it("only kicks off one request to the database if multiple sources ask at once", async () => {
+    sandbox.stub(process, "platform").value("win32");
+    const cache = new import_SystemTraySettingCache.SystemTraySettingCache(sql, config, [], "1.2.3");
+    await Promise.all([cache.get(), cache.get(), cache.get()]);
+    (0, import_chai.assert)(configGetStub.calledOnceWith("system-tray-setting"));
+    sinon.assert.calledOnce(sqlCallStub);
+  });
+  it("returns DoNotUseSystemTray if system tray is unsupported and there are no CLI flags", async () => {
+    sandbox.stub(process, "platform").value("darwin");
+    const cache = new import_SystemTraySettingCache.SystemTraySettingCache(sql, config, [], "1.2.3");
+    import_chai.assert.strictEqual(await cache.get(), import_SystemTraySetting.SystemTraySetting.DoNotUseSystemTray);
+    sinon.assert.notCalled(configGetStub);
+    sinon.assert.notCalled(configSetStub);
+    sinon.assert.notCalled(sqlCallStub);
+  });
+});
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiU3lzdGVtVHJheVNldHRpbmdDYWNoZV90ZXN0LnRzIl0sCiAgInNvdXJjZXNDb250ZW50IjogWyIvLyBDb3B5cmlnaHQgMjAyMSBTaWduYWwgTWVzc2VuZ2VyLCBMTENcbi8vIFNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBBR1BMLTMuMC1vbmx5XG5cbmltcG9ydCB7IGFzc2VydCB9IGZyb20gJ2NoYWknO1xuaW1wb3J0ICogYXMgc2lub24gZnJvbSAnc2lub24nO1xuaW1wb3J0IHR5cGUgeyBNYWluU1FMIH0gZnJvbSAnLi4vLi4vc3FsL21haW4nO1xuaW1wb3J0IHsgU3lzdGVtVHJheVNldHRpbmcgfSBmcm9tICcuLi8uLi90eXBlcy9TeXN0ZW1UcmF5U2V0dGluZyc7XG5cbmltcG9ydCB0eXBlIHsgQ29uZmlnVHlwZSB9IGZyb20gJy4uLy4uLy4uL2FwcC9iYXNlX2NvbmZpZyc7XG5pbXBvcnQgeyBTeXN0ZW1UcmF5U2V0dGluZ0NhY2hlIH0gZnJvbSAnLi4vLi4vLi4vYXBwL1N5c3RlbVRyYXlTZXR0aW5nQ2FjaGUnO1xuXG5kZXNjcmliZSgnU3lzdGVtVHJheVNldHRpbmdDYWNoZScsICgpID0+IHtcbiAgbGV0IHNhbmRib3g6IHNpbm9uLlNpbm9uU2FuZGJveDtcblxuICBsZXQgc3FsQ2FsbFN0dWI6IHNpbm9uLlNpbm9uU3R1YjtcbiAgbGV0IGNvbmZpZ0dldFN0dWI6IHNpbm9uLlNpbm9uU3R1YjtcbiAgbGV0IGNvbmZpZ1NldFN0dWI6IHNpbm9uLlNpbm9uU3R1YjtcbiAgbGV0IHNxbDogUGljazxNYWluU1FMLCAnc3FsQ2FsbCc+O1xuICBsZXQgY29uZmlnOiBQaWNrPENvbmZpZ1R5cGUsICdnZXQnIHwgJ3NldCc+O1xuXG4gIGJlZm9yZUVhY2goKCkgPT4ge1xuICAgIHNhbmRib3ggPSBzaW5vbi5jcmVhdGVTYW5kYm94KCk7XG5cbiAgICBzcWxDYWxsU3R1YiA9IHNhbmRib3guc3R1YigpLnJlc29sdmVzKCk7XG4gICAgc3FsID0geyBzcWxDYWxsOiBzcWxDYWxsU3R1YiB9O1xuXG4gICAgY29uZmlnR2V0U3R1YiA9IHNhbmRib3guc3R1YigpLnJldHVybnModW5kZWZpbmVkKTtcbiAgICBjb25maWdTZXRTdHViID0gc2FuZGJveC5zdHViKCkucmV0dXJucyh1bmRlZmluZWQpO1xuICAgIGNvbmZpZyA9IHsgZ2V0OiBjb25maWdHZXRTdHViLCBzZXQ6IGNvbmZpZ1NldFN0dWIgfTtcbiAgfSk7XG5cbiAgYWZ0ZXJFYWNoKCgpID0+IHtcbiAgICBzYW5kYm94LnJlc3RvcmUoKTtcbiAgfSk7XG5cbiAgaXQoJ3JldHVybnMgTWluaW1pemVUb0FuZFN0YXJ0SW5TeXN0ZW1UcmF5IGlmIHBhc3NlZCB0aGUgLS1zdGFydC1pbi10cmF5IGFyZ3VtZW50JywgYXN5bmMgKCkgPT4ge1xuICAgIGNvbnN0IGp1c3RPbmVBcmcgPSBuZXcgU3lzdGVtVHJheVNldHRpbmdDYWNoZShcbiAgICAgIHNxbCxcbiAgICAgIGNvbmZpZyxcbiAgICAgIFsnLS1zdGFydC1pbi10cmF5J10sXG4gICAgICAnMS4yLjMnXG4gICAgKTtcbiAgICBhc3NlcnQuc3RyaWN0RXF1YWwoXG4gICAgICBhd2FpdCBqdXN0T25lQXJnLmdldCgpLFxuICAgICAgU3lzdGVtVHJheVNldHRpbmcuTWluaW1pemVUb0FuZFN0YXJ0SW5TeXN0ZW1UcmF5XG4gICAgKTtcblxuICAgIGNvbnN0IGJvdGhBcmdzID0gbmV3IFN5c3RlbVRyYXlTZXR0aW5nQ2FjaGUoXG4gICAgICBzcWwsXG4gICAgICBjb25maWcsXG4gICAgICBbJy0tc3RhcnQtaW4tdHJheScsICctLXVzZS10cmF5LWljb24nXSxcbiAgICAgICcxLjIuMydcbiAgICApO1xuICAgIGFzc2VydC5zdHJpY3RFcXVhbChcbiAgICAgIGF3YWl0IGJvdGhBcmdzLmdldCgpLFxuICAgICAgU3lzdGVtVHJheVNldHRpbmcuTWluaW1pemVUb0FuZFN0YXJ0SW5TeXN0ZW1UcmF5XG4gICAgKTtcblxuICAgIHNpbm9uLmFzc2VydC5ub3RDYWxsZWQoc3FsQ2FsbFN0dWIpO1xuICAgIHNpbm9uLmFzc2VydC5ub3RDYWxsZWQoY29uZmlnR2V0U3R1Yik7XG4gICAgc2lub24uYXNzZXJ0Lm5vdENhbGxlZChjb25maWdTZXRTdHViKTtcbiAgfSk7XG5cbiAgaXQoJ3JldHVybnMgTWluaW1pemVUb1N5c3RlbVRyYXkgaWYgcGFzc2VkIHRoZSAtLXVzZS10cmF5LWljb24gYXJndW1lbnQnLCBhc3luYyAoKSA9PiB7XG4gICAgY29uc3QgY2FjaGUgPSBuZXcgU3lzdGVtVHJheVNldHRpbmdDYWNoZShcbiAgICAgIHNxbCxcbiAgICAgIGNvbmZpZyxcbiAgICAgIFsnLS11c2UtdHJheS1pY29uJ10sXG4gICAgICAnMS4yLjMnXG4gICAgKTtcbiAgICBhc3NlcnQuc3RyaWN0RXF1YWwoXG4gICAgICBhd2FpdCBjYWNoZS5nZXQoKSxcbiAgICAgIFN5c3RlbVRyYXlTZXR0aW5nLk1pbmltaXplVG9TeXN0ZW1UcmF5XG4gICAgKTtcblxuICAgIHNpbm9uLmFzc2VydC5ub3RDYWxsZWQoc3FsQ2FsbFN0dWIpO1xuICAgIHNpbm9uLmFzc2VydC5ub3RDYWxsZWQoY29uZmlnR2V0U3R1Yik7XG4gICAgc2lub24uYXNzZXJ0Lm5vdENhbGxlZChjb25maWdTZXRTdHViKTtcbiAgfSk7XG5cbiAgaXQoJ3JldHVybnMgRG9Ob3RVc2VTeXN0ZW1UcmF5IGlmIHN5c3RlbSB0cmF5IGlzIHN1cHBvcnRlZCBidXQgbm8gcHJlZmVyZW5jZSBpcyBzdG9yZWQnLCBhc3luYyAoKSA9PiB7XG4gICAgc2FuZGJveC5zdHViKHByb2Nlc3MsICdwbGF0Zm9ybScpLnZhbHVlKCd3aW4zMicpO1xuXG4gICAgY29uc3QgY2FjaGUgPSBuZXcgU3lzdGVtVHJheVNldHRpbmdDYWNoZShzcWwsIGNvbmZpZywgW10sICcxLjIuMycpO1xuICAgIGFzc2VydC5zdHJpY3RFcXVhbChhd2FpdCBjYWNoZS5nZXQoKSwgU3lzdGVtVHJheVNldHRpbmcuRG9Ob3RVc2VTeXN0ZW1UcmF5KTtcbiAgICBhc3NlcnQoY29uZmlnR2V0U3R1Yi5jYWxsZWRPbmNlV2l0aCgnc3lzdGVtLXRyYXktc2V0dGluZycpKTtcbiAgICBhc3NlcnQoXG4gICAgICBjb25maWdTZXRTdHViLmNhbGxlZE9uY2VXaXRoKFxuICAgICAgICAnc3lzdGVtLXRyYXktc2V0dGluZycsXG4gICAgICAgIFN5c3RlbVRyYXlTZXR0aW5nLkRvTm90VXNlU3lzdGVtVHJheVxuICAgICAgKVxuICAgICk7XG4gIH0pO1xuXG4gIGl0KCdyZXR1cm5zIERvTm90VXNlU3lzdGVtVHJheSBpZiBzeXN0ZW0gdHJheSBpcyBzdXBwb3J0ZWQgYnV0IHRoZSBzdG9yZWQgcHJlZmVyZW5jZSBpcyBpbnZhbGlkJywgYXN5bmMgKCkgPT4ge1xuICAgIHNhbmRib3guc3R1Yihwcm9jZXNzLCAncGxhdGZvcm0nKS52YWx1ZSgnd2luMzInKTtcblxuICAgIHNxbENhbGxTdHViLnJlc29sdmVzKHsgdmFsdWU6ICdnYXJiYWdlJyB9KTtcblxuICAgIGNvbnN0IGNhY2hlID0gbmV3IFN5c3RlbVRyYXlTZXR0aW5nQ2FjaGUoc3FsLCBjb25maWcsIFtdLCAnMS4yLjMnKTtcbiAgICBhc3NlcnQuc3RyaWN0RXF1YWwoYXdhaXQgY2FjaGUuZ2V0KCksIFN5c3RlbVRyYXlTZXR0aW5nLkRvTm90VXNlU3lzdGVtVHJheSk7XG4gICAgYXNzZXJ0KGNvbmZpZ0dldFN0dWIuY2FsbGVkT25jZVdpdGgoJ3N5c3RlbS10cmF5LXNldHRpbmcnKSk7XG4gICAgYXNzZXJ0KFxuICAgICAgY29uZmlnU2V0U3R1Yi5jYWxsZWRPbmNlV2l0aChcbiAgICAgICAgJ3N5c3RlbS10cmF5LXNldHRpbmcnLFxuICAgICAgICBTeXN0ZW1UcmF5U2V0dGluZy5Eb05vdFVzZVN5c3RlbVRyYXlcbiAgICAgIClcbiAgICApO1xuICB9KTtcblxuICBpdCgncmV0dXJucyB0aGUgc3RvcmVkIHByZWZlcmVuY2UgaWYgc3lzdGVtIHRyYXkgaXMgc3VwcG9ydGVkIGFuZCBzb21ldGhpbmcgaXMgc3RvcmVkJywgYXN5bmMgKCkgPT4ge1xuICAgIHNhbmRib3guc3R1Yihwcm9jZXNzLCAncGxhdGZvcm0nKS52YWx1ZSgnd2luMzInKTtcblxuICAgIHNxbENhbGxTdHViLnJlc29sdmVzKHsgdmFsdWU6ICdNaW5pbWl6ZVRvU3lzdGVtVHJheScgfSk7XG5cbiAgICBjb25zdCBjYWNoZSA9IG5ldyBTeXN0ZW1UcmF5U2V0dGluZ0NhY2hlKHNxbCwgY29uZmlnLCBbXSwgJzEuMi4zJyk7XG4gICAgYXNzZXJ0LnN0cmljdEVxdWFsKFxuICAgICAgYXdhaXQgY2FjaGUuZ2V0KCksXG4gICAgICBTeXN0ZW1UcmF5U2V0dGluZy5NaW5pbWl6ZVRvU3lzdGVtVHJheVxuICAgICk7XG4gICAgYXNzZXJ0KGNvbmZpZ0dldFN0dWIuY2FsbGVkT25jZVdpdGgoJ3N5c3RlbS10cmF5LXNldHRpbmcnKSk7XG4gICAgYXNzZXJ0KFxuICAgICAgY29uZmlnU2V0U3R1Yi5jYWxsZWRPbmNlV2l0aChcbiAgICAgICAgJ3N5c3RlbS10cmF5LXNldHRpbmcnLFxuICAgICAgICBTeXN0ZW1UcmF5U2V0dGluZy5NaW5pbWl6ZVRvU3lzdGVtVHJheVxuICAgICAgKVxuICAgICk7XG4gIH0pO1xuXG4gIGl0KCdyZXR1cm5zIHRoZSBjYWNoZWQgcHJlZmVyZW5jZSBpZiBzeXN0ZW0gdHJheSBpcyBzdXBwb3J0ZWQgYW5kIHNvbWV0aGluZyBpcyBzdG9yZWQnLCBhc3luYyAoKSA9PiB7XG4gICAgc2FuZGJveC5zdHViKHByb2Nlc3MsICdwbGF0Zm9ybScpLnZhbHVlKCd3aW4zMicpO1xuXG4gICAgY29uZmlnR2V0U3R1Yi5yZXR1cm5zKCdNaW5pbWl6ZVRvU3lzdGVtVHJheScpO1xuXG4gICAgY29uc3QgY2FjaGUgPSBuZXcgU3lzdGVtVHJheVNldHRpbmdDYWNoZShzcWwsIGNvbmZpZywgW10sICcxLjIuMycpO1xuICAgIGFzc2VydC5zdHJpY3RFcXVhbChcbiAgICAgIGF3YWl0IGNhY2hlLmdldCgpLFxuICAgICAgU3lzdGVtVHJheVNldHRpbmcuTWluaW1pemVUb1N5c3RlbVRyYXlcbiAgICApO1xuICAgIGFzc2VydChjb25maWdHZXRTdHViLmNhbGxlZE9uY2VXaXRoKCdzeXN0ZW0tdHJheS1zZXR0aW5nJykpO1xuICAgIHNpbm9uLmFzc2VydC5ub3RDYWxsZWQoc3FsQ2FsbFN0dWIpO1xuICB9KTtcblxuICBpdCgnb25seSBraWNrcyBvZmYgb25lIHJlcXVlc3QgdG8gdGhlIGRhdGFiYXNlIGlmIG11bHRpcGxlIHNvdXJjZXMgYXNrIGF0IG9uY2UnLCBhc3luYyAoKSA9PiB7XG4gICAgc2FuZGJveC5zdHViKHByb2Nlc3MsICdwbGF0Zm9ybScpLnZhbHVlKCd3aW4zMicpO1xuXG4gICAgY29uc3QgY2FjaGUgPSBuZXcgU3lzdGVtVHJheVNldHRpbmdDYWNoZShzcWwsIGNvbmZpZywgW10sICcxLjIuMycpO1xuXG4gICAgYXdhaXQgUHJvbWlzZS5hbGwoW2NhY2hlLmdldCgpLCBjYWNoZS5nZXQoKSwgY2FjaGUuZ2V0KCldKTtcblxuICAgIGFzc2VydChjb25maWdHZXRTdHViLmNhbGxlZE9uY2VXaXRoKCdzeXN0ZW0tdHJheS1zZXR0aW5nJykpO1xuICAgIHNpbm9uLmFzc2VydC5jYWxsZWRPbmNlKHNxbENhbGxTdHViKTtcbiAgfSk7XG5cbiAgaXQoJ3JldHVybnMgRG9Ob3RVc2VTeXN0ZW1UcmF5IGlmIHN5c3RlbSB0cmF5IGlzIHVuc3VwcG9ydGVkIGFuZCB0aGVyZSBhcmUgbm8gQ0xJIGZsYWdzJywgYXN5bmMgKCkgPT4ge1xuICAgIHNhbmRib3guc3R1Yihwcm9jZXNzLCAncGxhdGZvcm0nKS52YWx1ZSgnZGFyd2luJyk7XG5cbiAgICBjb25zdCBjYWNoZSA9IG5ldyBTeXN0ZW1UcmF5U2V0dGluZ0NhY2hlKHNxbCwgY29uZmlnLCBbXSwgJzEuMi4zJyk7XG4gICAgYXNzZXJ0LnN0cmljdEVxdWFsKGF3YWl0IGNhY2hlLmdldCgpLCBTeXN0ZW1UcmF5U2V0dGluZy5Eb05vdFVzZVN5c3RlbVRyYXkpO1xuXG4gICAgc2lub24uYXNzZXJ0Lm5vdENhbGxlZChjb25maWdHZXRTdHViKTtcbiAgICBzaW5vbi5hc3NlcnQubm90Q2FsbGVkKGNvbmZpZ1NldFN0dWIpO1xuICAgIHNpbm9uLmFzc2VydC5ub3RDYWxsZWQoc3FsQ2FsbFN0dWIpO1xuICB9KTtcbn0pO1xuIl0sCiAgIm1hcHBpbmdzIjogIjs7Ozs7Ozs7Ozs7Ozs7O0FBR0Esa0JBQXVCO0FBQ3ZCLFlBQXVCO0FBRXZCLCtCQUFrQztBQUdsQyxvQ0FBdUM7QUFFdkMsU0FBUywwQkFBMEIsTUFBTTtBQUN2QyxNQUFJO0FBRUosTUFBSTtBQUNKLE1BQUk7QUFDSixNQUFJO0FBQ0osTUFBSTtBQUNKLE1BQUk7QUFFSixhQUFXLE1BQU07QUFDZixjQUFVLE1BQU0sY0FBYztBQUU5QixrQkFBYyxRQUFRLEtBQUssRUFBRSxTQUFTO0FBQ3RDLFVBQU0sRUFBRSxTQUFTLFlBQVk7QUFFN0Isb0JBQWdCLFFBQVEsS0FBSyxFQUFFLFFBQVEsTUFBUztBQUNoRCxvQkFBZ0IsUUFBUSxLQUFLLEVBQUUsUUFBUSxNQUFTO0FBQ2hELGFBQVMsRUFBRSxLQUFLLGVBQWUsS0FBSyxjQUFjO0FBQUEsRUFDcEQsQ0FBQztBQUVELFlBQVUsTUFBTTtBQUNkLFlBQVEsUUFBUTtBQUFBLEVBQ2xCLENBQUM7QUFFRCxLQUFHLGlGQUFpRixZQUFZO0FBQzlGLFVBQU0sYUFBYSxJQUFJLHFEQUNyQixLQUNBLFFBQ0EsQ0FBQyxpQkFBaUIsR0FDbEIsT0FDRjtBQUNBLHVCQUFPLFlBQ0wsTUFBTSxXQUFXLElBQUksR0FDckIsMkNBQWtCLDhCQUNwQjtBQUVBLFVBQU0sV0FBVyxJQUFJLHFEQUNuQixLQUNBLFFBQ0EsQ0FBQyxtQkFBbUIsaUJBQWlCLEdBQ3JDLE9BQ0Y7QUFDQSx1QkFBTyxZQUNMLE1BQU0sU0FBUyxJQUFJLEdBQ25CLDJDQUFrQiw4QkFDcEI7QUFFQSxVQUFNLE9BQU8sVUFBVSxXQUFXO0FBQ2xDLFVBQU0sT0FBTyxVQUFVLGFBQWE7QUFDcEMsVUFBTSxPQUFPLFVBQVUsYUFB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

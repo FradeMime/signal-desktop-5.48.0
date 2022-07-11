@@ -1,0 +1,82 @@
+var import_chai = require("chai");
+var import_getFontNameByTextScript = require("../../util/getFontNameByTextScript");
+var import_setupI18n = require("../../util/setupI18n");
+describe("getFontNameByTextScript", () => {
+  it("has arabic", () => {
+    const text = "\u0627\u0644\u062B\u0639\u0644\u0628 \u0627\u0644\u0628\u0646\u064A \u0627\u0644\u0633\u0631\u064A\u0639 \u064A\u0642\u0641\u0632 \u0641\u0648\u0642 \u0627\u0644\u0643\u0644\u0628 \u0627\u0644\u0643\u0633\u0648\u0644";
+    import_chai.assert.isTrue(import_getFontNameByTextScript.fontSniffer.hasArabic(text), "arabic");
+    import_chai.assert.isFalse(import_getFontNameByTextScript.fontSniffer.hasLatin(text), "latin");
+    import_chai.assert.isFalse(import_getFontNameByTextScript.fontSniffer.hasJapanese(text), "japanese");
+  });
+  it("has chinese (simplified)", () => {
+    const text = "\u654F\u6377\u7684\u68D5\u8272\u72D0\u72F8\u8DF3\u8FC7\u4E86\u61D2\u72D7";
+    import_chai.assert.isTrue(import_getFontNameByTextScript.fontSniffer.hasCJK(text), "cjk");
+    import_chai.assert.isFalse(import_getFontNameByTextScript.fontSniffer.hasLatin(text), "latin");
+    import_chai.assert.isFalse(import_getFontNameByTextScript.fontSniffer.hasJapanese(text), "japanese");
+  });
+  it("has chinese (traditional)", () => {
+    const text = "\u654F\u6377\u7684\u68D5\u8272\u72D0\u72F8\u8DF3\u904E\u4E86\u61F6\u72D7";
+    import_chai.assert.isTrue(import_getFontNameByTextScript.fontSniffer.hasCJK(text), "cjk");
+    import_chai.assert.isFalse(import_getFontNameByTextScript.fontSniffer.hasLatin(text), "latin");
+    import_chai.assert.isFalse(import_getFontNameByTextScript.fontSniffer.hasJapanese(text), "japanese");
+  });
+  it("has cyrillic (Bulgarian)", () => {
+    const text = "\u0411\u044A\u0440\u0437\u0430\u0442\u0430 \u043A\u0430\u0444\u044F\u0432\u0430 \u043B\u0438\u0441\u0438\u0446\u0430 \u043F\u0440\u0435\u0441\u043A\u0430\u0447\u0430 \u043C\u044A\u0440\u0437\u0435\u043B\u0438\u0432\u043E\u0442\u043E \u043A\u0443\u0447\u0435";
+    import_chai.assert.isFalse(import_getFontNameByTextScript.fontSniffer.hasLatin(text), "latin");
+    import_chai.assert.isTrue(import_getFontNameByTextScript.fontSniffer.hasCyrillic(text), "cyrillic");
+    import_chai.assert.isFalse(import_getFontNameByTextScript.fontSniffer.hasArabic(text), "arabic");
+  });
+  it("has cyrillic (Ukranian)", () => {
+    const text = "\u0428\u0432\u0438\u0434\u043A\u0430 \u0431\u0443\u0440\u0430 \u043B\u0438\u0441\u0438\u0446\u044F \u0441\u0442\u0440\u0438\u0431\u0430\u0454 \u0447\u0435\u0440\u0435\u0437 \u043B\u0435\u0434\u0430\u0447\u043E\u0433\u043E \u043F\u0441\u0430";
+    import_chai.assert.isFalse(import_getFontNameByTextScript.fontSniffer.hasLatin(text), "latin");
+    import_chai.assert.isTrue(import_getFontNameByTextScript.fontSniffer.hasCyrillic(text), "cyrillic");
+    import_chai.assert.isFalse(import_getFontNameByTextScript.fontSniffer.hasArabic(text), "arabic");
+  });
+  it("has devanagari", () => {
+    const text = "\u0924\u0947\u091C, \u092D\u0942\u0930\u0940 \u0932\u094B\u092E\u0921\u0940 \u0906\u0932\u0938\u0940 \u0915\u0941\u0924\u094D\u0924\u0947 \u0915\u0947 \u0909\u092A\u0930 \u0915\u0942\u0926 \u0917\u0908";
+    import_chai.assert.isTrue(import_getFontNameByTextScript.fontSniffer.hasDevanagari(text), "devanagari");
+    import_chai.assert.isFalse(import_getFontNameByTextScript.fontSniffer.hasLatin(text), "latin");
+    import_chai.assert.isFalse(import_getFontNameByTextScript.fontSniffer.hasCyrillic(text), "cyrillic");
+  });
+  it("has japanese", () => {
+    const text = "\u901F\u3044\u8336\u8272\u306E\u30AD\u30C4\u30CD\u306F\u6020\u60F0\u306A\u72AC\u3092\u98DB\u3073\u8D8A\u3048\u307E\u3059";
+    import_chai.assert.isFalse(import_getFontNameByTextScript.fontSniffer.hasDevanagari(text), "devanagari");
+    import_chai.assert.isFalse(import_getFontNameByTextScript.fontSniffer.hasLatin(text), "latin");
+    import_chai.assert.isTrue(import_getFontNameByTextScript.fontSniffer.hasJapanese(text), "japanese");
+    import_chai.assert.isTrue(import_getFontNameByTextScript.fontSniffer.hasCJK(text), "cjk");
+  });
+  it("throws when passing in an invalid text style", () => {
+    const text = "abc";
+    import_chai.assert.throws(() => {
+      (0, import_getFontNameByTextScript.getFontNameByTextScript)(text, -1);
+    });
+    import_chai.assert.throws(() => {
+      (0, import_getFontNameByTextScript.getFontNameByTextScript)(text, 99);
+    });
+  });
+  it("returns the correct font names in the right order (japanese)", () => {
+    const text = "\u901F\u3044\u8336\u8272\u306E\u30AD\u30C4\u30CD\u306F\u6020\u60F0\u306A\u72AC\u3092\u98DB\u3073\u8D8A\u3048\u307E\u3059";
+    const actual = (0, import_getFontNameByTextScript.getFontNameByTextScript)(text, 0);
+    const expected = '"Hiragino Sans W3", "PingFang SC Regular", SimHei, sans-serif';
+    import_chai.assert.equal(actual, expected);
+  });
+  it("returns the correct font names in the right order (latin)", () => {
+    const text = "The quick brown fox jumps over the lazy dog";
+    const actual = (0, import_getFontNameByTextScript.getFontNameByTextScript)(text, 0);
+    const expected = "Inter, sans-serif";
+    import_chai.assert.equal(actual, expected);
+  });
+  it("returns the correct font names (chinese simplified)", () => {
+    const text = "\u654F\u6377\u7684\u68D5\u8272\u72D0\u72F8\u8DF3\u8FC7\u4E86\u61D2\u72D7";
+    const actual = (0, import_getFontNameByTextScript.getFontNameByTextScript)(text, 0, (0, import_setupI18n.setupI18n)("zh_CN", {}));
+    const expected = '"PingFang SC Regular", SimHei, sans-serif';
+    import_chai.assert.equal(actual, expected);
+  });
+  it("returns the correct font names (chinese traditional)", () => {
+    const text = "\u654F\u6377\u7684\u68D5\u8272\u72D0\u72F8\u8DF3\u904E\u4E86\u61F6\u72D7";
+    const actual = (0, import_getFontNameByTextScript.getFontNameByTextScript)(text, 0, (0, import_setupI18n.setupI18n)("zh_TW", {}));
+    const expected = '"PingFang TC Regular", "JhengHei TC Regular", sans-serif';
+    import_chai.assert.equal(actual, expected);
+  });
+});
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiZ2V0Rm9udE5hbWVCeVRleHRTY3JpcHRfdGVzdC50cyJdLAogICJzb3VyY2VzQ29udGVudCI6IFsiLy8gQ29weXJpZ2h0IDIwMjEgU2lnbmFsIE1lc3NlbmdlciwgTExDXG4vLyBTUERYLUxpY2Vuc2UtSWRlbnRpZmllcjogQUdQTC0zLjAtb25seVxuXG5pbXBvcnQgeyBhc3NlcnQgfSBmcm9tICdjaGFpJztcblxuaW1wb3J0IHtcbiAgZm9udFNuaWZmZXIsXG4gIGdldEZvbnROYW1lQnlUZXh0U2NyaXB0LFxufSBmcm9tICcuLi8uLi91dGlsL2dldEZvbnROYW1lQnlUZXh0U2NyaXB0JztcbmltcG9ydCB7IHNldHVwSTE4biB9IGZyb20gJy4uLy4uL3V0aWwvc2V0dXBJMThuJztcblxuZGVzY3JpYmUoJ2dldEZvbnROYW1lQnlUZXh0U2NyaXB0JywgKCkgPT4ge1xuICBpdCgnaGFzIGFyYWJpYycsICgpID0+IHtcbiAgICBjb25zdCB0ZXh0ID0gJ1x1MDYyN1x1MDY0NFx1MDYyQlx1MDYzOVx1MDY0NFx1MDYyOCBcdTA2MjdcdTA2NDRcdTA2MjhcdTA2NDZcdTA2NEEgXHUwNjI3XHUwNjQ0XHUwNjMzXHUwNjMxXHUwNjRBXHUwNjM5IFx1MDY0QVx1MDY0Mlx1MDY0MVx1MDYzMiBcdTA2NDFcdTA2NDhcdTA2NDIgXHUwNjI3XHUwNjQ0XHUwNjQzXHUwNjQ0XHUwNjI4IFx1MDYyN1x1MDY0NFx1MDY0M1x1MDYzM1x1MDY0OFx1MDY0NCc7XG4gICAgYXNzZXJ0LmlzVHJ1ZShmb250U25pZmZlci5oYXNBcmFiaWModGV4dCksICdhcmFiaWMnKTtcbiAgICBhc3NlcnQuaXNGYWxzZShmb250U25pZmZlci5oYXNMYXRpbih0ZXh0KSwgJ2xhdGluJyk7XG4gICAgYXNzZXJ0LmlzRmFsc2UoZm9udFNuaWZmZXIuaGFzSmFwYW5lc2UodGV4dCksICdqYXBhbmVzZScpO1xuICB9KTtcblxuICBpdCgnaGFzIGNoaW5lc2UgKHNpbXBsaWZpZWQpJywgKCkgPT4ge1xuICAgIGNvbnN0IHRleHQgPSAnXHU2NTRGXHU2Mzc3XHU3Njg0XHU2OEQ1XHU4MjcyXHU3MkQwXHU3MkY4XHU4REYzXHU4RkM3XHU0RTg2XHU2MUQyXHU3MkQ3JztcbiAgICBhc3NlcnQuaXNUcnVlKGZvbnRTbmlmZmVyLmhhc0NKSyh0ZXh0KSwgJ2NqaycpO1xuICAgIGFzc2VydC5pc0ZhbHNlKGZvbnRTbmlmZmVyLmhhc0xhdGluKHRleHQpLCAnbGF0aW4nKTtcbiAgICBhc3NlcnQuaXNGYWxzZShmb250U25pZmZlci5oYXNKYXBhbmVzZSh0ZXh0KSwgJ2phcGFuZXNlJyk7XG4gIH0pO1xuXG4gIGl0KCdoYXMgY2hpbmVzZSAodHJhZGl0aW9uYWwpJywgKCkgPT4ge1xuICAgIGNvbnN0IHRleHQgPSAnXHU2NTRGXHU2Mzc3XHU3Njg0XHU2OEQ1XHU4MjcyXHU3MkQwXHU3MkY4XHU4REYzXHU5MDRFXHU0RTg2XHU2MUY2XHU3MkQ3JztcbiAgICBhc3NlcnQuaXNUcnVlKGZvbnRTbmlmZmVyLmhhc0NKSyh0ZXh0KSwgJ2NqaycpO1xuICAgIGFzc2VydC5pc0ZhbHNlKGZvbnRTbmlmZmVyLmhhc0xhdGluKHRleHQpLCAnbGF0aW4nKTtcbiAgICBhc3NlcnQuaXNGYWxzZShmb250U25pZmZlci5oYXNKYXBhbmVzZSh0ZXh0KSwgJ2phcGFuZXNlJyk7XG4gIH0pO1xuXG4gIGl0KCdoYXMgY3lyaWxsaWMgKEJ1bGdhcmlhbiknLCAoKSA9PiB7XG4gICAgY29uc3QgdGV4dCA9ICdcdTA0MTFcdTA0NEFcdTA0NDBcdTA0MzdcdTA0MzBcdTA0NDJcdTA0MzAgXHUwNDNBXHUwNDMwXHUwNDQ0XHUwNDRGXHUwNDMyXHUwNDMwIFx1MDQzQlx1MDQzOFx1MDQ0MVx1MDQzOFx1MDQ0Nlx1MDQzMCBcdTA0M0ZcdTA0NDBcdTA0MzVcdTA0NDFcdTA0M0FcdTA0MzBcdTA0NDdcdTA0MzAgXHUwNDNDXHUwNDRBXHUwNDQwXHUwNDM3XHUwNDM1XHUwNDNCXHUwNDM4XHUwNDMyXHUwNDNFXHUwNDQyXHUwNDNFIFx1MDQzQVx1MDQ0M1x1MDQ0N1x1MDQzNSc7XG4gICAgYXNzZXJ0LmlzRmFsc2UoZm9udFNuaWZmZXIuaGFzTGF0aW4odGV4dCksICdsYXRpbicpO1xuICAgIGFzc2VydC5pc1RydWUoZm9udFNuaWZmZXIuaGFzQ3lyaWxsaWModGV4dCksICdjeXJpbGxpYycpO1xuICAgIGFzc2VydC5pc0ZhbHNlKGZvbnRTbmlmZmVyLmhhc0FyYWJpYyh0ZXh0KSwgJ2FyYWJpYycpO1xuICB9KTtcblxuICBpdCgnaGFzIGN5cmlsbGljIChVa3JhbmlhbiknLCAoKSA9PiB7XG4gICAgY29uc3QgdGV4dCA9ICdcdTA0MjhcdTA0MzJcdTA0MzhcdTA0MzRcdTA0M0FcdTA0MzAgXHUwNDMxXHUwNDQzXHUwNDQwXHUwNDMwIFx1MDQzQlx1MDQzOFx1MDQ0MVx1MDQzOFx1MDQ0Nlx1MDQ0RiBcdTA0NDFcdTA0NDJcdTA0NDBcdTA0MzhcdTA0MzFcdTA0MzBcdTA0NTQgXHUwNDQ3XHUwNDM1XHUwNDQwXHUwNDM1XHUwNDM3IFx1MDQzQlx1MDQzNVx1MDQzNFx1MDQzMFx1MDQ0N1x1MDQzRVx1MDQzM1x1MDQzRSBcdTA0M0ZcdTA0NDFcdTA0MzAnO1xuICAgIGFzc2VydC5pc0ZhbHNlKGZvbnRTbmlmZmVyLmhhc0xhdGluKHRleHQpLCAnbGF0aW4nKTtcbiAgICBhc3NlcnQuaXNUcnVlKGZvbnRTbmlmZmVyLmhhc0N5cmlsbGljKHRleHQpLCAnY3lyaWxsaWMnKTtcbiAgICBhc3NlcnQuaXNGYWxzZShmb250U25pZmZlci5oYXNBcmFiaWModGV4dCksICdhcmFiaWMnKTtcbiAgfSk7XG5cbiAgaXQoJ2hhcyBkZXZhbmFnYXJpJywgKCkgPT4ge1xuICAgIGNvbnN0IHRleHQgPSAnXHUwOTI0XHUwOTQ3XHUwOTFDLCBcdTA5MkRcdTA5NDJcdTA5MzBcdTA5NDAgXHUwOTMyXHUwOTRCXHUwOTJFXHUwOTIxXHUwOTQwIFx1MDkwNlx1MDkzMlx1MDkzOFx1MDk0MCBcdTA5MTVcdTA5NDFcdTA5MjRcdTA5NERcdTA5MjRcdTA5NDcgXHUwOTE1XHUwOTQ3IFx1MDkwOVx1MDkyQVx1MDkzMCBcdTA5MTVcdTA5NDJcdTA5MjYgXHUwOTE3XHUwOTA4JztcbiAgICBhc3NlcnQuaXNUcnVlKGZvbnRTbmlmZmVyLmhhc0RldmFuYWdhcmkodGV4dCksICdkZXZhbmFnYXJpJyk7XG4gICAgYXNzZXJ0LmlzRmFsc2UoZm9udFNuaWZmZXIuaGFzTGF0aW4odGV4dCksICdsYXRpbicpO1xuICAgIGFzc2VydC5pc0ZhbHNlKGZvbnRTbmlmZmVyLmhhc0N5cmlsbGljKHRleHQpLCAnY3lyaWxsaWMnKTtcbiAgfSk7XG5cbiAgaXQoJ2hhcyBqYXBhbmVzZScsICgpID0+IHtcbiAgICBjb25zdCB0ZXh0ID0gJ1x1OTAxRlx1MzA0NFx1ODMzNlx1ODI3Mlx1MzA2RVx1MzBBRFx1MzBDNFx1MzBDRFx1MzA2Rlx1NjAyMFx1NjBGMFx1MzA2QVx1NzJBQ1x1MzA5Mlx1OThEQlx1MzA3M1x1OEQ4QVx1MzA0OFx1MzA3RVx1MzA1OSc7XG4gICAgYXNzZXJ0LmlzRmFsc2UoZm9udFNuaWZmZXIuaGFzRGV2YW5hZ2FyaSh0ZXh0KSwgJ2RldmFuYWdhcmknKTtcbiAgICBhc3NlcnQuaXNGYWxzZShmb250U25pZmZlci5oYXNMYXRpbih0ZXh0KSwgJ2xhdGluJyk7XG4gICAgYXNzZXJ0LmlzVHJ1ZShmb250U25pZmZlci5oYXNKYXBhbmVzZSh0ZXh0KSwgJ2phcGFuZXNlJyk7XG4gICAgYXNzZXJ0LmlzVHJ1ZShmb250U25pZmZlci5oYXNDSksodGV4dCksICdjamsnKTtcbiAgfSk7XG5cbiAgaXQoJ3Rocm93cyB3aGVuIHBhc3NpbmcgaW4gYW4gaW52YWxpZCB0ZXh0IHN0eWxlJywgKCkgPT4ge1xuICAgIGNvbnN0IHRleHQgPSAnYWJjJztcblxuICAgIGFzc2VydC50aHJvd3MoKCkgPT4ge1xuICAgICAgZ2V0Rm9udE5hbWVCeVRleHRTY3JpcHQodGV4dCwgLTEpO1xuICAgIH0pO1xuXG4gICAgYXNzZXJ0LnRocm93cygoKSA9PiB7XG4gICAgICBnZXRGb250TmFtZUJ5VGV4dFNjcmlwdCh0ZXh0LCA5OSk7XG4gICAgfSk7XG4gIH0pO1xuXG4gIGl0KCdyZXR1cm5zIHRoZSBjb3JyZWN0IGZvbnQgbmFtZXMgaW4gdGhlIHJpZ2h0IG9yZGVyIChqYXBhbmVzZSknLCAoKSA9PiB7XG4gICAgY29uc3QgdGV4dCA9ICdcdTkwMUZcdTMwNDRcdTgzMzZcdTgyNzJcdTMwNkVcdTMwQURcdTMwQzRcdTMwQ0RcdTMwNkZcdTYwMjBcdTYwRjBcdTMwNkFcdTcyQUNcdTMwOTJcdTk4REJcdTMwNzNcdThEOEFcdTMwNDhcdTMwN0VcdTMwNTknO1xuXG4gICAgY29uc3QgYWN0dWFsID0gZ2V0Rm9udE5hbWVCeVRleHRTY3JpcHQodGV4dCwgMCk7XG4gICAgY29uc3QgZXhwZWN0ZWQgPVxuICAgICAgJ1wiSGlyYWdpbm8gU2FucyBXM1wiLCBcIlBpbmdGYW5nIFNDIFJlZ3VsYXJcIiwgU2ltSGVpLCBzYW5zLXNlcmlmJztcbiAgICBhc3NlcnQuZXF1YWwoYWN0dWFsLCBleHBlY3RlZCk7XG4gIH0pO1xuXG4gIGl0KCdyZXR1cm5zIHRoZSBjb3JyZWN0IGZvbnQgbmFtZXMgaW4gdGhlIHJpZ2h0IG9yZGVyIChsYXRpbiknLCAoKSA9PiB7XG4gICAgY29uc3QgdGV4dCA9ICdUaGUgcXVpY2sgYnJvd24gZm94IGp1bXBzIG92ZXIgdGhlIGxhenkgZG9nJztcblxuICAgIGNvbnN0IGFjdHVhbCA9IGdldEZvbnROYW1lQnlUZXh0U2NyaXB0KHRleHQsIDApO1xuICAgIGNvbnN0IGV4cGVjdGVkID0gJ0ludGVyLCBzYW5zLXNlcmlmJztcbiAgICBhc3NlcnQuZXF1YWwoYWN0dWFsLCBleHBlY3RlZCk7XG4gIH0pO1xuXG4gIGl0KCdyZXR1cm5zIHRoZSBjb3JyZWN0IGZvbnQgbmFtZXMgKGNoaW5lc2Ugc2ltcGxpZmllZCknLCAoKSA9PiB7XG4gICAgY29uc3QgdGV4dCA9ICdcdTY1NEZcdTYzNzdcdTc2ODRcdTY4RDVcdTgyNzJcdTcyRDBcdTcyRjhcdThERjNcdThGQzdcdTRFODZcdTYxRDJcdTcyRDcnO1xuXG4gICAgY29uc3QgYWN0dWFsID0gZ2V0Rm9udE5hbWVCeVRleHRTY3JpcHQodGV4dCwgMCwgc2V0dXBJMThuKCd6aF9DTicsIHt9KSk7XG4gICAgY29uc3QgZXhwZWN0ZWQgPSAnXCJQaW5nRmFuZyBTQyBSZWd1bGFyXCIsIFNpbUhlaSwgc2Fucy1zZXJpZic7XG4gICAgYXNzZXJ0LmVxdWFsKGFjdHVhbCwgZXhwZWN0ZWQpO1xuICB9KTtcblxuICBpdCgncmV0dXJucyB0aGUgY29ycmVjdCBmb250IG5hbWVzIChjaGluZXNlIHRyYWRpdGlvbmFsKScsICgpID0+IHtcbiAgICBjb25zdCB0ZXh0ID0gJ1x1NjU0Rlx1NjM3N1x1NzY4NFx1NjhENVx1ODI3Mlx1NzJEMFx1NzJGOFx1OERGM1x1OTA0RVx1NEU4Nlx1NjFGNlx1NzJENyc7XG5cbiAgICBjb25zdCBhY3R1YWwgPSBnZXRGb250TmFtZUJ5VGV4dFNjcmlwdCh0ZXh0LCAwLCBzZXR1cEkxOG4oJ3poX1RXJywge30pKTtcbiAgICBjb25zdCBleHBlY3RlZCA9ICdcIlBpbmdGYW5nIFRDIFJlZ3VsYXJcIiwgXCJKaGVuZ0hlaSBUQyBSZWd1bGFyXCIsIHNhbnMtc2VyaWYnO1xuICAgIGFzc2VydC5lcXVhbChhY3R1YWwsIGV4cGVjdGVkKTtcbiAgfSk7XG59KTtcbiJdLAogICJtYXBwaW5ncyI6ICJBQUdBLGtCQUF1QjtBQUV2QixxQ0FHTztBQUNQLHVCQUEwQjtBQUUxQixTQUFTLDJCQUEyQixNQUFNO0FBQ3hDLEtBQUcsY0FBYyxNQUFNO0FBQ3JCLFVBQU0sT0FBTztBQUNiLHVCQUFPLE9BQU8sMkNBQVksVUFBVSxJQUFJLEdBQUcsUUFBUTtBQUNuRCx1QkFBTyxRQUFRLDJDQUFZLFNBQVMsSUFBSSxHQUFHLE9BQU87QUFDbEQsdUJBQU8sUUFBUSwyQ0FBWSxZQUFZLElBQUksR0FBRyxVQUFVO0FBQUEsRUFDMUQsQ0FBQztBQUVELEtBQUcsNEJBQTRCLE1BQU07QUFDbkMsVUFBTSxPQUFPO0FBQ2IsdUJBQU8sT0FBTywyQ0FB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

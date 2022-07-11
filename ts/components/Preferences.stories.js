@@ -1,0 +1,197 @@
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target, mod));
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+var Preferences_stories_exports = {};
+__export(Preferences_stories_exports, {
+  Blocked1: () => Blocked1,
+  BlockedMany: () => BlockedMany,
+  CustomUniversalExpireTimer: () => CustomUniversalExpireTimer,
+  _Preferences: () => _Preferences,
+  default: () => Preferences_stories_default
+});
+module.exports = __toCommonJS(Preferences_stories_exports);
+var import_react = __toESM(require("react"));
+var import_addon_actions = require("@storybook/addon-actions");
+var import_messages = __toESM(require("../../_locales/en/messages.json"));
+var import_Preferences = require("./Preferences");
+var import_setupI18n = require("../util/setupI18n");
+var import_Colors = require("../types/Colors");
+var import_phoneNumberSharingMode = require("../util/phoneNumberSharingMode");
+var import_phoneNumberDiscoverability = require("../util/phoneNumberDiscoverability");
+const i18n = (0, import_setupI18n.setupI18n)("en", import_messages.default);
+const availableMicrophones = [
+  {
+    name: "DefAuLt (Headphones)",
+    index: 0,
+    uniqueId: "Default",
+    i18nKey: "default_communication_device"
+  }
+];
+const availableSpeakers = [
+  {
+    name: "Default",
+    index: 0,
+    uniqueId: "Default",
+    i18nKey: "default_communication_device"
+  },
+  {
+    name: "Natalie's Airpods (Bluetooth)",
+    index: 1,
+    uniqueId: "aa"
+  },
+  {
+    name: "UE Boom (Bluetooth)",
+    index: 2,
+    uniqueId: "bb"
+  }
+];
+const createProps = /* @__PURE__ */ __name(() => ({
+  availableCameras: [
+    {
+      deviceId: "dfbe6effe70b0611ba0fdc2a9ea3f39f6cb110e6687948f7e5f016c111b7329c",
+      groupId: "63ee218d2446869e40adfc958ff98263e51f74382b0143328ee4826f20a76f47",
+      kind: "videoinput",
+      label: "FaceTime HD Camera (Built-in) (9fba:bced)"
+    },
+    {
+      deviceId: "e2db196a31d50ff9b135299dc0beea67f65b1a25a06d8a4ce76976751bb7a08d",
+      groupId: "218ba7f00d7b1239cca15b9116769e5e7d30cc01104ebf84d667643661e0ecf9",
+      kind: "videoinput",
+      label: "Logitech Webcam (4e72:9058)"
+    }
+  ],
+  availableMicrophones,
+  availableSpeakers,
+  blockedCount: 0,
+  customColors: {},
+  defaultConversationColor: import_Colors.DEFAULT_CONVERSATION_COLOR,
+  deviceName: "Work Windows ME",
+  hasAudioNotifications: true,
+  hasAutoDownloadUpdate: true,
+  hasAutoLaunch: true,
+  hasCallNotifications: true,
+  hasCallRingtoneNotification: false,
+  hasCountMutedConversations: false,
+  hasHideMenuBar: false,
+  hasIncomingCallNotifications: true,
+  hasLinkPreviews: true,
+  hasMediaCameraPermissions: true,
+  hasMediaPermissions: true,
+  hasMinimizeToAndStartInSystemTray: true,
+  hasMinimizeToSystemTray: true,
+  hasNotificationAttention: false,
+  hasNotifications: true,
+  hasReadReceipts: true,
+  hasRelayCalls: false,
+  hasSpellCheck: true,
+  hasTypingIndicators: true,
+  lastSyncTime: Date.now(),
+  notificationContent: "name",
+  selectedCamera: "dfbe6effe70b0611ba0fdc2a9ea3f39f6cb110e6687948f7e5f016c111b7329c",
+  selectedMicrophone: availableMicrophones[0],
+  selectedSpeaker: availableSpeakers[1],
+  themeSetting: "system",
+  universalExpireTimer: 3600,
+  whoCanFindMe: import_phoneNumberDiscoverability.PhoneNumberDiscoverability.Discoverable,
+  whoCanSeeMe: import_phoneNumberSharingMode.PhoneNumberSharingMode.Everybody,
+  zoomFactor: 1,
+  addCustomColor: (0, import_addon_actions.action)("addCustomColor"),
+  closeSettings: (0, import_addon_actions.action)("closeSettings"),
+  doDeleteAllData: (0, import_addon_actions.action)("doDeleteAllData"),
+  doneRendering: (0, import_addon_actions.action)("doneRendering"),
+  editCustomColor: (0, import_addon_actions.action)("editCustomColor"),
+  getConversationsWithCustomColor: () => Promise.resolve([]),
+  initialSpellCheckSetting: true,
+  makeSyncRequest: () => {
+    (0, import_addon_actions.action)("makeSyncRequest");
+    return Promise.resolve();
+  },
+  removeCustomColor: (0, import_addon_actions.action)("removeCustomColor"),
+  removeCustomColorOnConversations: (0, import_addon_actions.action)("removeCustomColorOnConversations"),
+  resetAllChatColors: (0, import_addon_actions.action)("resetAllChatColors"),
+  resetDefaultChatColor: (0, import_addon_actions.action)("resetDefaultChatColor"),
+  setGlobalDefaultConversationColor: (0, import_addon_actions.action)("setGlobalDefaultConversationColor"),
+  isAudioNotificationsSupported: true,
+  isAutoDownloadUpdatesSupported: true,
+  isAutoLaunchSupported: true,
+  isHideMenuBarSupported: true,
+  isNotificationAttentionSupported: true,
+  isPhoneNumberSharingSupported: false,
+  isSyncSupported: true,
+  isSystemTraySupported: true,
+  onAudioNotificationsChange: (0, import_addon_actions.action)("onAudioNotificationsChange"),
+  onAutoDownloadUpdateChange: (0, import_addon_actions.action)("onAutoDownloadUpdateChange"),
+  onAutoLaunchChange: (0, import_addon_actions.action)("onAutoLaunchChange"),
+  onCallNotificationsChange: (0, import_addon_actions.action)("onCallNotificationsChange"),
+  onCallRingtoneNotificationChange: (0, import_addon_actions.action)("onCallRingtoneNotificationChange"),
+  onCountMutedConversationsChange: (0, import_addon_actions.action)("onCountMutedConversationsChange"),
+  onHideMenuBarChange: (0, import_addon_actions.action)("onHideMenuBarChange"),
+  onIncomingCallNotificationsChange: (0, import_addon_actions.action)("onIncomingCallNotificationsChange"),
+  onLastSyncTimeChange: (0, import_addon_actions.action)("onLastSyncTimeChange"),
+  onMediaCameraPermissionsChange: (0, import_addon_actions.action)("onMediaCameraPermissionsChange"),
+  onMediaPermissionsChange: (0, import_addon_actions.action)("onMediaPermissionsChange"),
+  onMinimizeToAndStartInSystemTrayChange: (0, import_addon_actions.action)("onMinimizeToAndStartInSystemTrayChange"),
+  onMinimizeToSystemTrayChange: (0, import_addon_actions.action)("onMinimizeToSystemTrayChange"),
+  onNotificationAttentionChange: (0, import_addon_actions.action)("onNotificationAttentionChange"),
+  onNotificationContentChange: (0, import_addon_actions.action)("onNotificationContentChange"),
+  onNotificationsChange: (0, import_addon_actions.action)("onNotificationsChange"),
+  onRelayCallsChange: (0, import_addon_actions.action)("onRelayCallsChange"),
+  onSelectedCameraChange: (0, import_addon_actions.action)("onSelectedCameraChange"),
+  onSelectedMicrophoneChange: (0, import_addon_actions.action)("onSelectedMicrophoneChange"),
+  onSelectedSpeakerChange: (0, import_addon_actions.action)("onSelectedSpeakerChange"),
+  onSpellCheckChange: (0, import_addon_actions.action)("onSpellCheckChange"),
+  onThemeChange: (0, import_addon_actions.action)("onThemeChange"),
+  onUniversalExpireTimerChange: (0, import_addon_actions.action)("onUniversalExpireTimerChange"),
+  onZoomFactorChange: (0, import_addon_actions.action)("onZoomFactorChange"),
+  i18n,
+  executeMenuRole: (0, import_addon_actions.action)("executeMenuRole"),
+  platform: "win32",
+  isWindows11: false
+}), "createProps");
+var Preferences_stories_default = {
+  title: "Components/Preferences"
+};
+const _Preferences = /* @__PURE__ */ __name(() => /* @__PURE__ */ import_react.default.createElement(import_Preferences.Preferences, {
+  ...createProps()
+}), "_Preferences");
+const Blocked1 = /* @__PURE__ */ __name(() => /* @__PURE__ */ import_react.default.createElement(import_Preferences.Preferences, {
+  ...createProps(),
+  blockedCount: 1
+}), "Blocked1");
+const BlockedMany = /* @__PURE__ */ __name(() => /* @__PURE__ */ import_react.default.createElement(import_Preferences.Preferences, {
+  ...createProps(),
+  blockedCount: 55
+}), "BlockedMany");
+const CustomUniversalExpireTimer = /* @__PURE__ */ __name(() => /* @__PURE__ */ import_react.default.createElement(import_Preferences.Preferences, {
+  ...createProps(),
+  universalExpireTimer: 9e3
+}), "CustomUniversalExpireTimer");
+CustomUniversalExpireTimer.story = {
+  name: "Custom universalExpireTimer"
+};
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  Blocked1,
+  BlockedMany,
+  CustomUniversalExpireTimer,
+  _Preferences
+});
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiUHJlZmVyZW5jZXMuc3Rvcmllcy50c3giXSwKICAic291cmNlc0NvbnRlbnQiOiBbIi8vIENvcHlyaWdodCAyMDIxIFNpZ25hbCBNZXNzZW5nZXIsIExMQ1xuLy8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEFHUEwtMy4wLW9ubHlcblxuaW1wb3J0IFJlYWN0IGZyb20gJ3JlYWN0JztcbmltcG9ydCB7IGFjdGlvbiB9IGZyb20gJ0BzdG9yeWJvb2svYWRkb24tYWN0aW9ucyc7XG5cbmltcG9ydCBlbk1lc3NhZ2VzIGZyb20gJy4uLy4uL19sb2NhbGVzL2VuL21lc3NhZ2VzLmpzb24nO1xuaW1wb3J0IHR5cGUgeyBQcm9wc1R5cGUgfSBmcm9tICcuL1ByZWZlcmVuY2VzJztcbmltcG9ydCB7IFByZWZlcmVuY2VzIH0gZnJvbSAnLi9QcmVmZXJlbmNlcyc7XG5pbXBvcnQgeyBzZXR1cEkxOG4gfSBmcm9tICcuLi91dGlsL3NldHVwSTE4bic7XG5pbXBvcnQgeyBERUZBVUxUX0NPTlZFUlNBVElPTl9DT0xPUiB9IGZyb20gJy4uL3R5cGVzL0NvbG9ycyc7XG5pbXBvcnQgeyBQaG9uZU51bWJlclNoYXJpbmdNb2RlIH0gZnJvbSAnLi4vdXRpbC9waG9uZU51bWJlclNoYXJpbmdNb2RlJztcbmltcG9ydCB7IFBob25lTnVtYmVyRGlzY292ZXJhYmlsaXR5IH0gZnJvbSAnLi4vdXRpbC9waG9uZU51bWJlckRpc2NvdmVyYWJpbGl0eSc7XG5cbmNvbnN0IGkxOG4gPSBzZXR1cEkxOG4oJ2VuJywgZW5NZXNzYWdlcyk7XG5cbmNvbnN0IGF2YWlsYWJsZU1pY3JvcGhvbmVzID0gW1xuICB7XG4gICAgbmFtZTogJ0RlZkF1THQgKEhlYWRwaG9uZXMpJyxcbiAgICBpbmRleDogMCxcbiAgICB1bmlxdWVJZDogJ0RlZmF1bHQnLFxuICAgIGkxOG5LZXk6ICdkZWZhdWx0X2NvbW11bmljYXRpb25fZGV2aWNlJyxcbiAgfSxcbl07XG5cbmNvbnN0IGF2YWlsYWJsZVNwZWFrZXJzID0gW1xuICB7XG4gICAgbmFtZTogJ0RlZmF1bHQnLFxuICAgIGluZGV4OiAwLFxuICAgIHVuaXF1ZUlkOiAnRGVmYXVsdCcsXG4gICAgaTE4bktleTogJ2RlZmF1bHRfY29tbXVuaWNhdGlvbl9kZXZpY2UnLFxuICB9LFxuICB7XG4gICAgbmFtZTogXCJOYXRhbGllJ3MgQWlycG9kcyAoQmx1ZXRvb3RoKVwiLFxuICAgIGluZGV4OiAxLFxuICAgIHVuaXF1ZUlkOiAnYWEnLFxuICB9LFxuICB7XG4gICAgbmFtZTogJ1VFIEJvb20gKEJsdWV0b290aCknLFxuICAgIGluZGV4OiAyLFxuICAgIHVuaXF1ZUlkOiAnYmInLFxuICB9LFxuXTtcblxuY29uc3QgY3JlYXRlUHJvcHMgPSAoKTogUHJvcHNUeXBlID0+ICh7XG4gIGF2YWlsYWJsZUNhbWVyYXM6IFtcbiAgICB7XG4gICAgICBkZXZpY2VJZDpcbiAgICAgICAgJ2RmYmU2ZWZmZTcwYjA2MTFiYTBmZGMyYTllYTNmMzlmNmNiMTEwZTY2ODc5NDhmN2U1ZjAxNmMxMTFiNzMyOWMnLFxuICAgICAgZ3JvdXBJZDpcbiAgICAgICAgJzYzZWUyMThkMjQ0Njg2OWU0MGFkZmM5NThmZjk4MjYzZTUxZjc0MzgyYjAxNDMzMjhlZTQ4MjZmMjBhNzZmNDcnLFxuICAgICAga2luZDogJ3ZpZGVvaW5wdXQnIGFzIE1lZGlhRGV2aWNlS2luZCxcbiAgICAgIGxhYmVsOiAnRmFjZVRpbWUgSEQgQ2FtZXJhIChCdWlsdC1pbikgKDlmYmE6YmNlZCknLFxuICAgIH0sXG4gICAge1xuICAgICAgZGV2aWNlSWQ6XG4gICAgICAgICdlMmRiMTk2YTMxZDUwZmY5YjEzNTI5OWRjMGJlZWE2N2Y2NWIxYTI1YTA2ZDhhNGNlNzY5NzY3NTFiYjdhMDhkJyxcbiAgICAgIGdyb3VwSWQ6XG4gICAgICAgICcyMThiYTdmMDBkN2IxMjM5Y2NhMTViOTExNjc2OWU1ZTdkMzBjYzAxMTA0ZWJmODRkNjY3NjQzNjYxZTBlY2Y5JyxcbiAgICAgIGtpbmQ6ICd2aWRlb2lucHV0JyBhcyBNZWRpYURldmljZUtpbmQsXG4gICAgICBsYWJlbDogJ0xvZ2l0ZWNoIFdlYmNhbSAoNGU3Mjo5MDU4KScsXG4gICAgfSxcbiAgXSxcbiAgYXZhaWxhYmxlTWljcm9waG9uZXMsXG4gIGF2YWlsYWJsZVNwZWFrZXJzLFxuICBibG9ja2VkQ291bnQ6IDAsXG4gIGN1c3RvbUNvbG9yczoge30sXG4gIGRlZmF1bHRDb252ZXJzYXRpb25Db2xvcjogREVGQVVMVF9DT05WRVJTQVRJT05fQ09MT1IsXG4gIGRldmljZU5hbWU6ICdXb3JrIFdpbmRvd3MgTUUnLFxuICBoYXNBdWRpb05vdGlmaWNhdGlvbnM6IHRydWUsXG4gIGhhc0F1dG9Eb3dubG9hZFVwZGF0ZTogdHJ1ZSxcbiAgaGFzQXV0b0xhdW5jaDogdHJ1ZSxcbiAgaGFzQ2FsbE5vdGlmaWNhdGlvbnM6IHRydWUsXG4gIGhhc0NhbGxSaW5ndG9uZU5vdGlmaWNhdGlvbjogZmFsc2UsXG4gIGhhc0NvdW50TXV0ZWRDb252ZXJzYXRpb25zOiBmYWxzZSxcbiAgaGFzSGlkZU1lbnVCYXI6IGZhbHNlLFxuICBoYXNJbmNvbWluZ0NhbGxOb3RpZmljYXRpb25zOiB0cnVlLFxuICBoYXNMaW5rUHJldmlld3M6IHRydWUsXG4gIGhhc01lZGlhQ2FtZXJhUGVybWlzc2lvbnM6IHRydWUsXG4gIGhhc01lZGlhUGVybWlzc2lvbnM6IHRydWUsXG4gIGhhc01pbmltaXplVG9BbmRTdGFydEluU3lzdGVtVHJheTogdHJ1ZSxcbiAgaGFzTWluaW1pemVUb1N5c3RlbVRyYXk6IHRydWUsXG4gIGhhc05vdGlmaWNhdGlvbkF0dGVudGlvbjogZmFsc2UsXG4gIGhhc05vdGlmaWNhdGlvbnM6IHRydWUsXG4gIGhhc1JlYWRSZWNlaXB0czogdHJ1ZSxcbiAgaGFzUmVsYXlDYWxsczogZmFsc2UsXG4gIGhhc1NwZWxsQ2hlY2s6IHRydWUsXG4gIGhhc1R5cGluZ0luZGljYXRvcnM6IHRydWUsXG4gIGxhc3RTeW5jVGltZTogRGF0ZS5ub3coKSxcbiAgbm90aWZpY2F0aW9uQ29udGVudDogJ25hbWUnLFxuICBzZWxlY3RlZENhbWVyYTpcbiAgICAnZGZiZTZlZmZlNzBiMDYxMWJhMGZkYzJhOWVhM2YzOWY2Y2IxMTBlNjY4Nzk0OGY3ZTVmMDE2YzExMWI3MzI5YycsXG4gIHNlbGVjdGVkTWljcm9waG9uZTogYXZhaWxhYmxlTWljcm9waG9uZXNbMF0sXG4gIHNlbGVjdGVkU3BlYWtlcjogYXZhaWxhYmxlU3BlYWtlcnNbMV0sXG4gIHRoZW1lU2V0dGluZzogJ3N5c3RlbScsXG4gIHVuaXZlcnNhbEV4cGlyZVRpbWVyOiAzNjAwLFxuICB3aG9DYW5GaW5kTWU6IFBob25lTnVtYmVyRGlzY292ZXJhYmlsaXR5LkRpc2NvdmVyYWJsZSxcbiAgd2hvQ2FuU2VlTWU6IFBob25lTnVtYmVyU2hhcmluZ01vZGUuRXZlcnlib2R5LFxuICB6b29tRmFjdG9yOiAxLFxuXG4gIGFkZEN1c3RvbUNvbG9yOiBhY3Rpb24oJ2FkZEN1c3RvbUNvbG9yJyksXG4gIGNsb3NlU2V0dGluZ3M6IGFjdGlvbignY2xvc2VTZXR0aW5ncycpLFxuICBkb0RlbGV0ZUFsbERhdGE6IGFjdGlvbignZG9EZWxldGVBbGxEYXRhJyksXG4gIGRvbmVSZW5kZXJpbmc6IGFjdGlvbignZG9uZVJlbmRlcmluZycpLFxuICBlZGl0Q3VzdG9tQ29sb3I6IGFjdGlvbignZWRpdEN1c3RvbUNvbG9yJyksXG4gIGdldENvbnZlcnNhdGlvbnNXaXRoQ3VzdG9tQ29sb3I6ICgpID0+IFByb21pc2UucmVzb2x2ZShbXSksXG4gIGluaXRpYWxTcGVsbENoZWNrU2V0dGluZzogdHJ1ZSxcbiAgbWFrZVN5bmNSZXF1ZXN0OiAoKSA9PiB7XG4gICAgYWN0aW9uKCdtYWtlU3luY1JlcXVlc3QnKTtcbiAgICByZXR1cm4gUHJvbWlzZS5yZXNvbHZlKCk7XG4gIH0sXG4gIHJlbW92ZUN1c3RvbUNvbG9yOiBhY3Rpb24oJ3JlbW92ZUN1c3RvbUNvbG9yJyksXG4gIHJlbW92ZUN1c3RvbUNvbG9yT25Db252ZXJzYXRpb25zOiBhY3Rpb24oJ3JlbW92ZUN1c3RvbUNvbG9yT25Db252ZXJzYXRpb25zJyksXG4gIHJlc2V0QWxsQ2hhdENvbG9yczogYWN0aW9uKCdyZXNldEFsbENoYXRDb2xvcnMnKSxcbiAgcmVzZXREZWZhdWx0Q2hhdENvbG9yOiBhY3Rpb24oJ3Jlc2V0RGVmYXVsdENoYXRDb2xvcicpLFxuICBzZXRHbG9iYWxEZWZhdWx0Q29udmVyc2F0aW9uQ29sb3I6IGFjdGlvbihcbiAgICAnc2V0R2xvYmFsRGVmYXVsdENvbnZlcnNhdGlvbkNvbG9yJ1xuICApLFxuXG4gIGlzQXVkaW9Ob3RpZmljYXRpb25zU3VwcG9ydGVkOiB0cnVlLFxuICBpc0F1dG9Eb3dubG9hZFVwZGF0ZXNTdXBwb3J0ZWQ6IHRydWUsXG4gIGlzQXV0b0xhdW5jaFN1cHBvcnRlZDogdHJ1ZSxcbiAgaXNIaWRlTWVudUJhclN1cHBvcnRlZDogdHJ1ZSxcbiAgaXNOb3RpZmljYXRpb25BdHRlbnRpb25TdXBwb3J0ZWQ6IHRydWUsXG4gIGlzUGhvbmVOdW1iZXJTaGFyaW5nU3VwcG9ydGVkOiBmYWxzZSxcbiAgaXNTeW5jU3VwcG9ydGVkOiB0cnVlLFxuICBpc1N5c3RlbVRyYXlTdXBwb3J0ZWQ6IHRydWUsXG5cbiAgb25BdWRpb05vdGlmaWNhdGlvbnNDaGFuZ2U6IGFjdGlvbignb25BdWRpb05vdGlmaWNhdGlvbnNDaGFuZ2UnKSxcbiAgb25BdXRvRG93bmxvYWRVcGRhdGVDaGFuZ2U6IGFjdGlvbignb25BdXRvRG93bmxvYWRVcGRhdGVDaGFuZ2UnKSxcbiAgb25BdXRvTGF1bmNoQ2hhbmdlOiBhY3Rpb24oJ29uQXV0b0xhdW5jaENoYW5nZScpLFxuICBvbkNhbGxOb3RpZmljYXRpb25zQ2hhbmdlOiBhY3Rpb24oJ29uQ2FsbE5vdGlmaWNhdGlvbnNDaGFuZ2UnKSxcbiAgb25DYWxsUmluZ3RvbmVOb3RpZmljYXRpb25DaGFuZ2U6IGFjdGlvbignb25DYWxsUmluZ3RvbmVOb3RpZmljYXRpb25DaGFuZ2UnKSxcbiAgb25Db3VudE11dGVkQ29udmVyc2F0aW9uc0NoYW5nZTogYWN0aW9uKCdvbkNvdW50TXV0ZWRDb252ZXJzYXRpb25zQ2hhbmdlJyksXG4gIG9uSGlkZU1lbnVCYXJDaGFuZ2U6IGFjdGlvbignb25IaWRlTWVudUJhckNoYW5nZScpLFxuICBvbkluY29taW5nQ2FsbE5vdGlmaWNhdGlvbnNDaGFuZ2U6IGFjdGlvbihcbiAgICAnb25JbmNvbWluZ0NhbGxOb3RpZmljYXRpb25zQ2hhbmdlJ1xuICApLFxuICBvbkxhc3RTeW5jVGltZUNoYW5nZTogYWN0aW9uKCdvbkxhc3RTeW5jVGltZUNoYW5nZScpLFxuICBvbk1lZGlhQ2FtZXJhUGVybWlzc2lvbnNDaGFuZ2U6IGFjdGlvbignb25NZWRpYUNhbWVyYVBlcm1pc3Npb25zQ2hhbmdlJyksXG4gIG9uTWVkaWFQZXJtaXNzaW9uc0NoYW5nZTogYWN0aW9uKCdvbk1lZGlhUGVybWlzc2lvbnNDaGFuZ2UnKSxcbiAgb25NaW5pbWl6ZVRvQW5kU3RhcnRJblN5c3RlbVRyYXlDaGFuZ2U6IGFjdGlvbihcbiAgICAnb25NaW5pbWl6ZVRvQW5kU3RhcnRJblN5c3RlbVRyYXlDaGFuZ2UnXG4gICksXG4gIG9uTWluaW1pemVUb1N5c3RlbVRyYXlDaGFuZ2U6IGFjdGlvbignb25NaW5pbWl6ZVRvU3lzdGVtVHJheUNoYW5nZScpLFxuICBvbk5vdGlmaWNhdGlvbkF0dGVudGlvbkNoYW5nZTogYWN0aW9uKCdvbk5vdGlmaWNhdGlvbkF0dGVudGlvbkNoYW5nZScpLFxuICBvbk5vdGlmaWNhdGlvbkNvbnRlbnRDaGFuZ2U6IGFjdGlvbignb25Ob3RpZmljYXRpb25Db250ZW50Q2hhbmdlJyksXG4gIG9uTm90aWZpY2F0aW9uc0NoYW5nZTogYWN0aW9uKCdvbk5vdGlmaWNhdGlvbnNDaGFuZ2UnKSxcbiAgb25SZWxheUNhbGxzQ2hhbmdlOiBhY3Rpb24oJ29uUmVsYXlDYWxsc0NoYW5nZScpLFxuICBvblNlbGVjdGVkQ2FtZXJhQ2hhbmdlOiBhY3Rpb24oJ29uU2VsZWN0ZWRDYW1lcmFDaGFuZ2UnKSxcbiAgb25TZWxlY3RlZE1pY3JvcGhvbmVDaGFuZ2U6IGFjdGlvbignb25TZWxlY3RlZE1pY3JvcGhvbmVDaGFuZ2UnKSxcbiAgb25TZWxlY3RlZFNwZWFrZXJDaGFuZ2U6IGFjdGlvbignb25TZWxlY3RlZFNwZWFrZXJDaGFuZ2UnKSxcbiAgb25TcGVsbENoZWNrQ2hhbmdlOiBhY3Rpb24oJ29uU3BlbGxDaGVja0NoYW5nZScpLFxuICBvblRoZW1lQ2hhbmdlOiBhY3Rpb24oJ29uVGhlbWVDaGFuZ2UnKSxcbiAgb25Vbml2ZXJzYWxFeHBpcmVUaW1lckNoYW5nZTogYWN0aW9uKCdvblVuaXZlcnNhbEV4cGlyZVRpbWVyQ2hhbmdlJyksXG4gIG9uWm9vbUZhY3RvckNoYW5nZTogYWN0aW9uKCdvblpvb21GYWN0b3JDaGFuZ2UnKSxcblxuICBpMThuLFxuXG4gIGV4ZWN1dGVNZW51Um9sZTogYWN0aW9uKCdleGVjdXRlTWVudVJvbGUnKSxcbiAgcGxhdGZvcm06ICd3aW4zMicsXG4gIGlzV2luZG93czExOiBmYWxzZSxcbn0pO1xuXG5leHBvcnQgZGVmYXVsdCB7XG4gIHRpdGxlOiAnQ29tcG9uZW50cy9QcmVmZXJlbmNlcycsXG59O1xuXG5leHBvcnQgY29uc3QgX1ByZWZlcmVuY2VzID0gKCk6IEpTWC5FbGVtZW50ID0+IChcbiAgPFByZWZlcmVuY2VzIHsuLi5jcmVhdGVQcm9wcygpfSAvPlxuKTtcblxuZXhwb3J0IGNvbnN0IEJsb2NrZWQxID0gKCk6IEpTWC5FbGVtZW50ID0+IChcbiAgPFByZWZlcmVuY2VzIHsuLi5jcmVhdGVQcm9wcygpfSBibG9ja2VkQ291bnQ9ezF9IC8+XG4pO1xuXG5leHBvcnQgY29uc3QgQmxvY2tlZE1hbnkgPSAoKTogSlNYLkVsZW1lbnQgPT4gKFxuICA8UHJlZmVyZW5jZXMgey4uLmNyZWF0ZVByb3BzKCl9IGJsb2NrZWRDb3VudD17NTV9IC8+XG4pO1xuXG5leHBvcnQgY29uc3QgQ3VzdG9tVW5pdmVyc2FsRXhwaXJlVGltZXIgPSAoKTogSlNYLkVsZW1lbnQgPT4gKFxuICA8UHJlZmVyZW5jZXMgey4uLmNyZWF0ZVByb3BzKCl9IHVuaXZlcnNhbEV4cGlyZVRpbWVyPXs5MDAwfSAvPlxuKTtcblxuQ3VzdG9tVW5pdmVyc2FsRXhwaXJlVGltZXIuc3RvcnkgPSB7XG4gIG5hbWU6ICdDdXN0b20gdW5pdmVyc2FsRXhwaXJlVGltZXInLFxufTtcbiJdLAogICJtYXBwaW5ncyI6ICI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUdBLG1CQUFrQjtBQUNsQiwyQkFBdUI7QUFFdkIsc0JBQXVCO0FBRXZCLHlCQUE0QjtBQUM1Qix1QkFBMEI7QUFDMUIsb0JBQTJDO0FBQzNDLG9DQUF1QztBQUN2Qyx3Q0FBMkM7QUFFM0MsTUFBTSxPQUFPLGdDQUFVLE1BQU0sdUJBQVU7QUFFdkMsTUFBTSx1QkFBdUI7QUFBQSxFQUMzQjtBQUFBLElBQ0UsTUFBTTtBQUFBLElBQ04sT0FBTztBQUFBLElBQ1AsVUFBVTtBQUFBLElBQ1YsU0FBUztBQUFBLEVBQ1g7QUFDRjtBQUVBLE1BQU0sb0JBQW9CO0FBQUEsRUFDeEI7QUFBQSxJQUNFLE1BQU07QUFBQSxJQUNOLE9BQU87QUFBQSxJQUNQLFVBQVU7QUFBQSxJQUNWLFNBQVM7QUFBQSxFQUNYO0FBQUEsRUFDQTtBQUFBLElBQ0UsTUFBTTtBQUFBLElBQ04sT0FBTztBQUFBLElBQ1AsVUFBVTtBQUFBLEVBQ1o7QUFBQSxFQUNBO0FBQUEsSUFDRSxNQUFNO0FBQUEsSUFDTixPQUFPO0FBQUEsSUFDUCxVQUFVO0FBQUEsRUFDWjtBQUNGO0FBRUEsTUFBTSxjQUFjLDZCQUFrQjtBQUFBLEVBQ3BDLGtCQUFrQjtBQUFBLElBQ2hCO0FBQUEsTUFDRSxVQUNFO0FBQUEsTUFDRixTQUNFO0FBQUEsTUFDRixNQUFNO0FBQUEsTUFDTixPQUFPO0FBQUEsSUFDVDtBQUFBLElBQ0E7QUFBQSxNQUNFLFVBQ0U7QUFBQSxNQUNGLFNBQ0U7QUFBQSxNQUNGLE1BQU07QUFBQSxNQUNOLE9BQU87QUFBQSxJQUNUO0FBQUEsRUFDRjtBQUFBLEVBQ0E7QUFBQSxFQUNBO0FBQUEsRUFDQSxjQUFjO0FBQUEsRUFDZCxjQUFjLENBQUM7QUFBQSxFQUNmLDBCQUEwQjtBQUFBLEVBQzFCLFlBQVk7QUFBQSxFQUNaLHVCQUF1QjtBQUFBLEVBQ3ZCLHVCQUF1QjtBQUFBLEVBQ3ZCLGVBQWU7QUFBQSxFQUNmLHNCQUFzQjtBQUFBLEVBQ3RCLDZCQUE2QjtBQUFBLEVBQzdCLDRCQUE0QjtBQUFBLEVBQzVCLGdCQUFnQjtBQUFBLEVBQ2hCLDhCQUE4QjtBQUFBLEVBQzlCLGlCQUFpQjtBQUFBLEVBQ2pCLDJCQUEyQjtBQUFBLEVBQzNCLHFCQUFxQjtBQUFBLEVBQ3JCLG1DQUFtQztBQUFBLEVBQ25DLHlCQUF5QjtBQUFBLEVBQ3pCLDBCQUEwQjtBQUFBLEVBQzFCLGtCQUFrQjtBQUFBLEVBQ2xCLGlCQUFpQjtBQUFBLEVBQ2pCLGVBQWU7QUFBQSxFQUNmLGVBQWU7QUFBQSxFQUNmLHFCQUFxQjtBQUFBLEVBQ3JCLGNBQWMsS0FBSyxJQUFJO0FBQUEsRUFDdkIscUJBQXFCO0FBQUEsRUFDckIsZ0JBQ0U7QUFBQSxFQUNGLG9CQUFvQixxQkFBcUI7QUFBQSxFQUN6QyxpQkFBaUIsa0JBQWtCO0FBQUEsRUFDbkMsY0FBYztBQUFBLEVBQ2Qsc0JBQXNCO0FBQUEsRUFDdEIsY0FBYyw2REFBMkI7QUFBQSxFQUN6QyxhQUFhLHFEQUF1QjtBQUFBLEVBQ3BDLFlBQVk7QUFBQSxFQUVaLGdCQUFnQixpQ0FBTyxnQkFBZ0I7QUFBQSxFQUN2QyxlQUFlLGlDQUFPLGVBQWU7QUFBQSxFQUNyQyxpQkFBaUIsaUNBQU8saUJBQWlCO0FBQUEsRUFDekMsZUFBZSxpQ0FBTyxlQUFlO0FBQUEsRUFDckMsaUJBQWlCLGlDQUFPLGlCQUFpQjtBQUFBLEVBQ3pDLGlDQUFpQyxNQUFNLFFBQVEsUUFBUSxDQUFDLENBQUM7QUFBQSxFQUN6RCwwQkFBMEI7QUFBQSxFQUMxQixpQkFBaUIsTUFBTTtBQUNyQixxQ0FBTyxpQkFBaUI7QUFDeEIsV0FBTyxRQUFRLFFBQVE7QUFBQSxFQUN6QjtBQUFBLEVBQ0EsbUJBQW1CLGlDQUFPLG1CQUFtQjtBQUFBLEVBQzdDLGtDQUFrQyxpQ0FBTyxrQ0FBa0M7QUFBQSxFQUMzRSxvQkFBb0IsaUNBQU8sb0JBQW9CO0FBQUEsRUFDL0MsdUJBQXVCLGlDQUFPLHVCQUF1QjtBQUFBLEVBQ3JELG1DQUFtQyxpQ0FDakMsbUNBQ0Y7QUFBQSxFQUVBLCtCQUErQjtBQUFBLEVBQy9CLGdDQUFnQztBQUFBLEVBQ2hDLHVCQUF1QjtBQUFBLEVBQ3ZCLHdCQUF3QjtBQUFBLEVBQ3hCLGtDQUFrQztBQUFBLEVBQ2xDLCtCQUErQjtBQUFBLEVBQy9CLGlCQUFpQjtBQUFBLEVBQ2pCLHVCQUF1QjtBQUFBLEVBRXZCLDRCQUE0QixpQ0FBTyw0QkFBNEI7QUFBQSxFQUMvRCw0QkFBNEIsaUNBQU8sNEJBQTRCO0FBQUEsRUFDL0Qsb0JBQW9CLGlDQUFPLG9CQUFvQjtBQUFBLEVBQy9DLDJCQUEyQixpQ0FBTywyQkFBMkI7QUFBQSxFQUM3RCxrQ0FBa0MsaUNBQU8sa0NBQWtDO0FBQUEsRUFDM0UsaUNBQWlDLGlDQUFPLGlDQUFpQztBQUFBLEVBQ3pFLHFCQUFxQixpQ0FBTyxxQkFBcUI7QUFBQSxFQUNqRCxtQ0FBbUMsaUNBQ2pDLG1DQUNGO0FBQUEsRUFDQSxzQkFBc0IsaUNBQU8sc0JBQXNCO0FBQUEsRUFDbkQsZ0NBQWdDLGlDQUFPLGdDQUFnQztBQUFBLEVBQ3ZFLDBCQUEwQixpQ0FBTywwQkFBMEI7QUFBQSxFQUMzRCx3Q0FBd0MsaUNBQ3RDLHdDQUNGO0FBQUEsRUFDQSw4QkFBOEIsaUNBQU8sOEJBQThCO0FBQUEsRUFDbkUsK0JBQStCLGlDQUFPLCtCQUErQjtBQUFBLEVBQ3JFLDZCQUE2QixpQ0FBTyw2QkFBNkI7QUFBQSxFQUNqRSx1QkFBdUIsaUNBQU8sdUJBQXVCO0FBQUEsRUFDckQsb0JBQW9CLGlDQUFPLG9CQUFvQjtBQUFBLEVBQy9DLHdCQUF3QixpQ0FBTyx3QkFBd0I7QUFBQSxFQUN2RCw0QkFBNEIsaUNBQU8sNEJBQTRCO0FBQUEsRUFDL0QseUJBQXlCLGlDQUFPLHlCQUF5QjtBQUFBLEVBQ3pELG9CQUFvQixpQ0FBTyxvQkFBb0I7QUFBQSxFQUMvQyxlQUFlLGlDQUFPLGVBQWU7QUFBQSxFQUNyQyw4QkFBOEIsaUNBQU8sOEJBQThCO0FBQUEsRUFDbkUsb0JBQW9CLGlDQUFPLG9CQUFvQjtBQUFBLEVBRS9DO0FBQUEsRUFFQSxpQkFBaUIsaUNBQU8saUJBQWlCO0FBQUEsRUFDekMsVUFBVTtBQUFBLEVBQ1YsYUFBYTtBQUNmLElBdEhvQjtBQXdIcEIsSUFBTyw4QkFBUTtBQUFBLEVBQ2IsT0FBTztBQUNUO0FBRU8sTUFBTSxlQUFlLDZCQUMxQixtREFBQztBQUFBLEtBQWdCLFlBQVk7QUFBQSxDQUFHLEdBRE47QUFJckIsTUFBTSxXQUFXLDZCQUN0QixtREFBQztBQUFBLEtBQWdCLFlBQVk7QUFBQSxFQUFHLGNBQWM7QUFBQSxDQUFHLEdBRDNCO0FBSWpCLE1BQU0sY0FBYyw2QkFDekIsbURBQUM7QUFBQSxLQUFnQixZQUFZO0FBQUEsRUFBRyxjQUFjO0FBQUEsQ0FBSSxHQUR6QjtBQUlwQixNQUFNLDZCQUE2Qiw2QkFDeEMsbURBQUM7QUFBQSxLQUFnQixZQUFZO0FBQUEsRUFBRyxzQkFBc0I7QUFBQSxDQUFNLEdBRHBCO0FBSTFDLDJCQUEyQixRQUFRO0FBQUEsRUFDakMsTUFBTTtBQUNSOyIsCiAgIm5hbWVzIjogW10KfQo=

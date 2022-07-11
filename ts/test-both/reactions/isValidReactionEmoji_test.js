@@ -1,0 +1,24 @@
+var import_chai = require("chai");
+var import_isValidReactionEmoji = require("../../reactions/isValidReactionEmoji");
+describe("isValidReactionEmoji", () => {
+  it("returns false for non-strings", () => {
+    import_chai.assert.isFalse((0, import_isValidReactionEmoji.isValidReactionEmoji)(void 0));
+    import_chai.assert.isFalse((0, import_isValidReactionEmoji.isValidReactionEmoji)(null));
+    import_chai.assert.isFalse((0, import_isValidReactionEmoji.isValidReactionEmoji)(1));
+  });
+  it("returns false for strings that aren't a single emoji", () => {
+    import_chai.assert.isFalse((0, import_isValidReactionEmoji.isValidReactionEmoji)(""));
+    import_chai.assert.isFalse((0, import_isValidReactionEmoji.isValidReactionEmoji)("a"));
+    import_chai.assert.isFalse((0, import_isValidReactionEmoji.isValidReactionEmoji)("abc"));
+    import_chai.assert.isFalse((0, import_isValidReactionEmoji.isValidReactionEmoji)("\u{1F4A9}\u{1F4A9}"));
+    import_chai.assert.isFalse((0, import_isValidReactionEmoji.isValidReactionEmoji)("\u{1F1F8}"));
+    import_chai.assert.isFalse((0, import_isValidReactionEmoji.isValidReactionEmoji)("\u200D"));
+  });
+  it("returns true for strings that are exactly 1 emoji", () => {
+    import_chai.assert.isTrue((0, import_isValidReactionEmoji.isValidReactionEmoji)("\u{1F1FA}\u{1F1F8}"));
+    import_chai.assert.isTrue((0, import_isValidReactionEmoji.isValidReactionEmoji)("\u{1F44D}"));
+    import_chai.assert.isTrue((0, import_isValidReactionEmoji.isValidReactionEmoji)("\u{1F44D}\u{1F3FE}"));
+    import_chai.assert.isTrue((0, import_isValidReactionEmoji.isValidReactionEmoji)("\u{1F469}\u200D\u2764\uFE0F\u200D\u{1F469}"));
+  });
+});
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiaXNWYWxpZFJlYWN0aW9uRW1vamlfdGVzdC50cyJdLAogICJzb3VyY2VzQ29udGVudCI6IFsiLy8gQ29weXJpZ2h0IDIwMjEgU2lnbmFsIE1lc3NlbmdlciwgTExDXG4vLyBTUERYLUxpY2Vuc2UtSWRlbnRpZmllcjogQUdQTC0zLjAtb25seVxuXG5pbXBvcnQgeyBhc3NlcnQgfSBmcm9tICdjaGFpJztcblxuaW1wb3J0IHsgaXNWYWxpZFJlYWN0aW9uRW1vamkgfSBmcm9tICcuLi8uLi9yZWFjdGlvbnMvaXNWYWxpZFJlYWN0aW9uRW1vamknO1xuXG5kZXNjcmliZSgnaXNWYWxpZFJlYWN0aW9uRW1vamknLCAoKSA9PiB7XG4gIGl0KCdyZXR1cm5zIGZhbHNlIGZvciBub24tc3RyaW5ncycsICgpID0+IHtcbiAgICBhc3NlcnQuaXNGYWxzZShpc1ZhbGlkUmVhY3Rpb25FbW9qaSh1bmRlZmluZWQpKTtcbiAgICBhc3NlcnQuaXNGYWxzZShpc1ZhbGlkUmVhY3Rpb25FbW9qaShudWxsKSk7XG4gICAgYXNzZXJ0LmlzRmFsc2UoaXNWYWxpZFJlYWN0aW9uRW1vamkoMSkpO1xuICB9KTtcblxuICBpdChcInJldHVybnMgZmFsc2UgZm9yIHN0cmluZ3MgdGhhdCBhcmVuJ3QgYSBzaW5nbGUgZW1vamlcIiwgKCkgPT4ge1xuICAgIGFzc2VydC5pc0ZhbHNlKGlzVmFsaWRSZWFjdGlvbkVtb2ppKCcnKSk7XG5cbiAgICBhc3NlcnQuaXNGYWxzZShpc1ZhbGlkUmVhY3Rpb25FbW9qaSgnYScpKTtcbiAgICBhc3NlcnQuaXNGYWxzZShpc1ZhbGlkUmVhY3Rpb25FbW9qaSgnYWJjJykpO1xuXG4gICAgYXNzZXJ0LmlzRmFsc2UoaXNWYWxpZFJlYWN0aW9uRW1vamkoJ1x1RDgzRFx1RENBOVx1RDgzRFx1RENBOScpKTtcblxuICAgIGFzc2VydC5pc0ZhbHNlKGlzVmFsaWRSZWFjdGlvbkVtb2ppKCdcdUQ4M0NcdURERjgnKSk7XG4gICAgYXNzZXJ0LmlzRmFsc2UoaXNWYWxpZFJlYWN0aW9uRW1vamkoJ1x1MjAwRCcpKTtcbiAgfSk7XG5cbiAgaXQoJ3JldHVybnMgdHJ1ZSBmb3Igc3RyaW5ncyB0aGF0IGFyZSBleGFjdGx5IDEgZW1vamknLCAoKSA9PiB7XG4gICAgYXNzZXJ0LmlzVHJ1ZShpc1ZhbGlkUmVhY3Rpb25FbW9qaSgnXHVEODNDXHVEREZBXHVEODNDXHVEREY4JykpO1xuICAgIGFzc2VydC5pc1RydWUoaXNWYWxpZFJlYWN0aW9uRW1vamkoJ1x1RDgzRFx1REM0RCcpKTtcbiAgICBhc3NlcnQuaXNUcnVlKGlzVmFsaWRSZWFjdGlvbkVtb2ppKCdcdUQ4M0RcdURDNERcdUQ4M0NcdURGRkUnKSk7XG4gICAgYXNzZXJ0LmlzVHJ1ZShpc1ZhbGlkUmVhY3Rpb25FbW9qaSgnXHVEODNEXHVEQzY5XHUyMDBEXHUyNzY0XHVGRTBGXHUyMDBEXHVEODNEXHVEQzY5JykpO1xuICB9KTtcbn0pO1xuIl0sCiAgIm1hcHBpbmdzIjogIkFBR0Esa0JBQXVCO0FBRXZCLGtDQUFxQztBQUVyQyxTQUFTLHdCQUF3QixNQUFNO0FBQ3JDLEtBQUcsaUNBQWlDLE1BQU07QUFDeEMsdUJBQU8sUUFBUSxzREFBcUIsTUFBUyxDQUFDO0FBQzlDLHVCQUFPLFFBQVEsc0RBQXFCLElBQUksQ0FBQztBQUN6Qyx1QkFBTyxRQUFRLHNEQUFxQixDQUFDLENBQUM7QUFBQSxFQUN4QyxDQUFDO0FBRUQsS0FBRyx3REFBd0QsTUFBTTtBQUMvRCx1QkFBTyxRQUFRLHNEQUFxQixFQUFFLENBQUM7QUFFdkMsdUJBQU8sUUFBUSxzREFBcUIsR0FBRyxDQUFDO0FBQ3hDLHVCQUFPLFFBQVEsc0RBQXFCLEtBQUssQ0FBQztBQUUxQyx1QkFBTyxRQUFRLHNEQUFxQixvQkFBTSxDQUFDO0FBRTNDLHVCQUFPLFFBQVEsc0RBQXFCLFdBQUksQ0FBQztBQUN6Qyx1QkFBTyxRQUFRLHNEQUFxQixRQUFHLENBQUM7QUFBQSxFQUMxQyxDQUFDO0FBRUQsS0FBRyxxREFBcUQsTUFBTTtBQUM1RCx1QkFBTyxPQUFPLHNEQUFxQixvQkFBTSxDQUFDO0FBQzFDLHVCQUFPLE9BQU8sc0RBQXFCLFdBQUksQ0FBQztBQUN4Qyx1QkFBTyxPQUFPLHNEQUFxQixvQkFBTSxDQUFDO0FBQzFDLHVCQUFPLE9BQU8sc0RBQXFCLDRDQUFVLENBQUM7QUFBQSxFQUNoRCxDQUFDO0FBQ0gsQ0FBQzsiLAogICJuYW1lcyI6IFtdCn0K
