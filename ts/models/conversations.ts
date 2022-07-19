@@ -1981,11 +1981,13 @@ export class ConversationModel extends window.Backbone
 
     // We'll fail over if the member list is empty
     if (memberList && memberList.length) {
+      log.info(`成员数量:${memberList.length}`);
       return memberList.length;
     }
 
     const temporaryMemberCount = this.get('temporaryMemberCount');
     if (isNumber(temporaryMemberCount)) {
+      log.info(`临时成员数量:${temporaryMemberCount}`);
       return temporaryMemberCount;
     }
 
@@ -1993,6 +1995,7 @@ export class ConversationModel extends window.Backbone
   }
 
   decrementMessageCount(): void {
+    log.info('递减消息计数');
     this.set({
       messageCount: Math.max((this.get('messageCount') || 0) - 1, 0),
     });
@@ -2002,10 +2005,12 @@ export class ConversationModel extends window.Backbone
   incrementSentMessageCount({ dry = false }: { dry?: boolean } = {}):
     | Partial<ConversationAttributesType>
     | undefined {
+    log.info('递增消息计数');
     const update = {
       messageCount: (this.get('messageCount') || 0) + 1,
       sentMessageCount: (this.get('sentMessageCount') || 0) + 1,
     };
+    log.info(`发送消息数:${this.get('messageCount')}`);
 
     if (dry) {
       return update;
@@ -2017,6 +2022,7 @@ export class ConversationModel extends window.Backbone
   }
 
   decrementSentMessageCount(): void {
+    log.info('递减发送消息计数');
     this.set({
       messageCount: Math.max((this.get('messageCount') || 0) - 1, 0),
       sentMessageCount: Math.max((this.get('sentMessageCount') || 0) - 1, 0),
@@ -4704,33 +4710,31 @@ export class ConversationModel extends window.Backbone
     }
   }
 
+  // 屏蔽profile数据的获取
   async getProfiles(): Promise<void> {
     // request all conversation members' keys
-    const conversations =
-      this.getMembers() as unknown as Array<ConversationModel>;
-
-    const queue = new PQueue({
-      concurrency: 3,
-    });
-
-    // Convert Promise<void[]> that is returned by addAll() to Promise<void>
-    const promise = (async () => {
-      await queue.addAll(
-        conversations.map(
-          conversation => () =>
-            getProfile(conversation.get('uuid'), conversation.get('e164'))
-        )
-      );
-    })();
-
-    this._activeProfileFetch = promise;
-    try {
-      await promise;
-    } finally {
-      if (this._activeProfileFetch === promise) {
-        this._activeProfileFetch = undefined;
-      }
-    }
+    // const conversations =
+    //   this.getMembers() as unknown as Array<ConversationModel>;
+    // const queue = new PQueue({
+    //   concurrency: 3,
+    // });
+    // // Convert Promise<void[]> that is returned by addAll() to Promise<void>
+    // const promise = (async () => {
+    //   await queue.addAll(
+    //     conversations.map(
+    //       conversation => () =>
+    //         getProfile(conversation.get('uuid'), conversation.get('e164'))
+    //     )
+    //   );
+    // })();
+    // this._activeProfileFetch = promise;
+    // try {
+    //   await promise;
+    // } finally {
+    //   if (this._activeProfileFetch === promise) {
+    //     this._activeProfileFetch = undefined;
+    //   }
+    // }
   }
 
   getActiveProfileFetch(): Promise<void> | undefined {

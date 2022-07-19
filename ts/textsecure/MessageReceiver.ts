@@ -1557,6 +1557,7 @@ export default class MessageReceiver
           ),
         zone
       );
+      log.info(`innerDecrypt 解密消息:${plaintext.toString()}`);
       return plaintext;
     }
     if (envelope.type === envelopeTypeEnum.PREKEY_BUNDLE) {
@@ -1575,6 +1576,7 @@ export default class MessageReceiver
         Buffer.from(ciphertext)
       );
 
+      // 记录
       const plaintext = await this.storage.protocol.enqueueSessionJob(
         address,
         async () =>

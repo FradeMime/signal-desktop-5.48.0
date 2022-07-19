@@ -525,6 +525,8 @@ const URL_CALLS = {
   updateDeviceName: 'v1/accounts/name',
   username: 'v1/accounts/username',
   whoami: 'v1/accounts/whoami',
+
+  getAccountUuid: 'v1/accounts/uuid',
 };
 
 const WEBSOCKET_CALLS = new Set<keyof typeof URL_CALLS>([
@@ -968,6 +970,7 @@ export type WebAPIType = {
   checkSockets: () => void;
   onOnline: () => Promise<void>;
   onOffline: () => Promise<void>;
+  getAccountsUuidForE164: (number: string) => Promise<string>;
 };
 
 export type SignedPreKeyType = {
@@ -1306,6 +1309,7 @@ export function initialize({
       uploadGroupAvatar,
       whoami,
       sendChallengeResponse,
+      getAccountsUuidForE164, // 2022-7-12 add search UUid
     };
 
     function _ajax(
@@ -2058,6 +2062,7 @@ export function initialize({
     }
 
     async function getKeysForIdentifier(identifier: string, deviceId?: number) {
+      log.info('getKeysForIdentifier');
       const keys = (await _ajax({
         call: 'keys',
         httpType: 'GET',
@@ -2065,6 +2070,7 @@ export function initialize({
         responseType: 'json',
         validateResponse: { identityKey: 'string', devices: 'object' },
       })) as ServerKeyResponseType;
+
       return handleKeys(keys);
     }
 
@@ -2073,6 +2079,7 @@ export function initialize({
       deviceId?: number,
       { accessKey }: { accessKey?: string } = {}
     ) {
+      log.info('getKeysForIdentifierUnauth');
       const keys = (await _ajax({
         call: 'keys',
         httpType: 'GET',
@@ -2868,6 +2875,22 @@ export function initialize({
         acis,
         accessKeys,
       });
+    }
+    // type AccountUUid = {
+    //   uidStr: string;
+    // };
+    // 2022-7-12 add search UUid
+    async function getAccountsUuidForE164(number: string): Promise<string> {
+      return `你好，小小${number}`;
+      // const result = (await _ajax({
+      //   call: 'getAccountUuid',
+      //   urlParameters: `/${number}`,
+      //   httpType: 'GET',
+      //   responseType: 'json',
+      //   validateResponse: { uidStr: 'string' },
+      // })) as AccountUUid;
+
+      // return result.uidStr;
     }
   }
 }

@@ -90,6 +90,7 @@ import type {
 import Server from './Server';
 import { isCorruptionError } from './errors';
 
+// 数据库开放接口
 // We listen to a lot of events on ipc, often on the same channel. This prevents
 //   any warnings that might be sent to the console in that case.
 if (ipc && ipc.setMaxListeners) {

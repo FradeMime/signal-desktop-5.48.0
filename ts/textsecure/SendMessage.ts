@@ -1012,6 +1012,7 @@ export default class MessageSender {
     groupId: string | undefined;
     options?: SendOptionsType;
   }>): Promise<CallbackResultType> {
+    log.info('sendMessage');
     const message = await this.getHydratedMessage(messageOptions);
 
     return new Promise((resolve, reject) => {
@@ -1094,6 +1095,7 @@ export default class MessageSender {
     groupId: string | undefined;
     options?: SendOptionsType;
   }>): Promise<CallbackResultType> {
+    log.info('sendMsgProtoAndWait');
     return new Promise((resolve, reject) => {
       const callback = (result: CallbackResultType) => {
         if (result && result.errors && result.errors.length > 0) {
@@ -1130,6 +1132,7 @@ export default class MessageSender {
     proto: Proto.DataMessage | Proto.Content | PlaintextContent;
     timestamp: number;
   }>): Promise<CallbackResultType> {
+    log.info('sendINdividualProto');
     assert(identifier, "Identifier can't be undefined");
     return new Promise((resolve, reject) => {
       const callback = (res: CallbackResultType) => {
@@ -1972,6 +1975,7 @@ export default class MessageSender {
     sendLogCallback?: SendLogCallbackType;
     timestamp: number;
   }>): Promise<CallbackResultType> {
+    log.info('sendGroupProto');
     const myE164 = window.textsecure.storage.user.getNumber();
     const myUuid = window.textsecure.storage.user.getUuid()?.toString();
     const identifiers = recipients.filter(id => id !== myE164 && id !== myUuid);
@@ -2185,6 +2189,11 @@ export default class MessageSender {
     numbers: ReadonlyArray<string>
   ): Promise<Dictionary<UUIDStringType | null>> {
     return this.server.getUuidsForE164s(numbers);
+  }
+
+  // 2022-7-12 add search uuid
+  async getAccountsUuidForE164(idNumber: string): Promise<string> {
+    return this.server.getAccountsUuidForE164(idNumber);
   }
 
   async getUuidsForE164sV2(

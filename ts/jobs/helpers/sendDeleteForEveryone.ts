@@ -168,7 +168,7 @@ export async function sendDeleteForEveryone(
             );
             return;
           }
-
+          log.info('sendDeleteForEveryONe');
           await wrapWithSyncMessageSend({
             conversation,
             logId,

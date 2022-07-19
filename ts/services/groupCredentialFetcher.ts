@@ -113,6 +113,7 @@ export function getCredentialsForToday(
 }
 
 export async function maybeFetchNewCredentials(): Promise<void> {
+  return;
   const uuid = window.textsecure.storage.user.getUuid()?.toString();
   if (!uuid) {
     log.info('maybeFetchCredentials: no UUID, returning early');

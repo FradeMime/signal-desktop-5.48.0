@@ -332,10 +332,13 @@ export default class OutgoingMessage {
   getPlaintext(): Uint8Array {
     if (!this.plaintext) {
       const { message } = this;
-
+      log.info(`getPLaintext:${JSON.stringify(message)}`);
       if (message instanceof Proto.Content) {
+        log.info(`msg:${message.dataMessage?.body}`);
         this.plaintext = padMessage(Proto.Content.encode(message).finish());
+        log.info(`pad msg plaintext:${this.plaintext}`);
       } else {
+        log.info(`serialize msg:${message.serialize}`);
         this.plaintext = message.serialize();
       }
     }

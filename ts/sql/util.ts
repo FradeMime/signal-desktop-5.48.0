@@ -4,6 +4,8 @@
 import type { Database } from 'better-sqlite3';
 import { isNumber, last } from 'lodash';
 
+// 具体的数据库操作指令
+
 export type EmptyQuery = [];
 export type ArrayQuery = Array<Array<null | number | bigint | string>>;
 export type Query = { [key: string]: null | number | bigint | string | Buffer };

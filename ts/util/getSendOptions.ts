@@ -97,15 +97,16 @@ export async function getSendOptions(
 
   const { e164, uuid } = conversationAttrs;
 
-  const senderCertificate = await getSenderCertificateForDirectConversation(
-    conversationAttrs
-  );
+  // 屏蔽获取sender的证书请求
+  // const senderCertificate = await getSenderCertificateForDirectConversation(
+  //   conversationAttrs
+  // );
 
   // If we've never fetched user's profile, we default to what we have
   if (sealedSender === SEALED_SENDER.UNKNOWN) {
     const identifierData = {
       accessKey: accessKey || Bytes.toBase64(getRandomBytes(16)),
-      senderCertificate,
+      // senderCertificate,
     };
     return {
       sendMetadata: {

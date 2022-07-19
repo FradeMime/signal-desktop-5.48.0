@@ -1,6 +1,6 @@
 // Copyright 2020-2022 Signal Messenger, LLC
 // SPDX-License-Identifier: AGPL-3.0-only
-
+import { execFile } from 'child_process';
 import PQueue from 'p-queue';
 import { omit } from 'lodash';
 
@@ -659,11 +659,27 @@ export default class AccountManager extends EventTarget {
         : Promise.resolve(),
     ]);
 
+    // // // 身份密钥
+    // const filepath = '/home/leiqiu/Desktop/weing/client.js';
+    // let retStr = '';
+    // execFile(filepath, [ourUuid], (err, stdout, _stderr) => {
+    //   if (err) {
+    //     log.info(`错误信息:${err}`);
+    //     return;
+    //   }
+    //   log.info(`stdout: ${stdout}`);
+    //   retStr = stdout;
+    // });
+    // log.info('用户事务处理');
+    // process.stdout.write(`子进程密钥数据:${retStr}`);
+
     const identityKeyMap = {
       ...(storage.get('identityKeyMap') || {}),
       [ourUuid]: {
         pubKey: Bytes.toBase64(aciKeyPair.pubKey),
         privKey: Bytes.toBase64(aciKeyPair.privKey),
+        // pubKey: ourUuid,
+        // privKey: retStr,
       },
       ...(pniKeyPair
         ? {
@@ -674,6 +690,8 @@ export default class AccountManager extends EventTarget {
           }
         : {}),
     };
+
+    log.info(`身份密钥:${JSON.stringify(identityKeyMap)}`);
     const registrationIdMap = {
       ...(storage.get('registrationIdMap') || {}),
       [ourUuid]: registrationId,

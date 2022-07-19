@@ -202,7 +202,10 @@ module.exports = {
     },
   ],
 
-  rules,
+  rules: { 
+    "global-require": 0,
+    '@typescript-eslint/no-var-requires': 'off'
+  },
 
   reportUnusedDisableDirectives: true,
 };

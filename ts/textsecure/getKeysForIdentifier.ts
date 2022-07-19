@@ -101,6 +101,7 @@ async function handleServerKeys(
   devicesToUpdate?: Array<number>
 ): Promise<void> {
   const ourUuid = window.textsecure.storage.user.getCheckedUuid();
+  log.info(`handleServerKeys:密钥处理${ourUuid}`);
   const sessionStore = new Sessions({ ourUuid });
   const identityKeyStore = new IdentityKeys({ ourUuid });
 

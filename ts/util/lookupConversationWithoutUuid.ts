@@ -14,8 +14,9 @@ import { showToast } from './showToast';
 import { strictAssert } from './assert';
 import type { UUIDFetchStateKeyType } from './uuidFetchState';
 
-// import * as JSClass from '../../assets/jsClass';
-import thingApp from '../../assets/jsClass';
+// const MPINAPP = require('../../components/mpin/mpinapp/mpinapp');
+
+// import { mpin } from '../../assets/mpin/mpinapp/mpinapp';
 
 export type LookupConversationWithoutUuidActionsType = Readonly<{
   lookupConversationWithoutUuid: typeof lookupConversationWithoutUuid;
@@ -76,6 +77,8 @@ export async function lookupConversationWithoutUuid(
   try {
     log.info('loopupconversationwithoutuuid try');
     let conversationId: string | undefined;
+    // /home/leiqiu/Desktop/Signal-Desktop/ts/util/lookuptest.js
+
     if (options.type === 'e164') {
       // const serverLookup = await messaging.getUuidsForE164s([options.e164]);
       // log.info(`loopupconversationwithoutuuid:${serverLookup}`);
@@ -93,13 +96,24 @@ export async function lookupConversationWithoutUuid(
       // {
       // add contacts function: need to add server.WebAPI.searchUUid heer
       // also need optimize
-      log.info(`lookupConversationWithoutUUid test:${thingApp}`);
+      // const testUUid = await messaging.getAccountsUuidForE164(options.e164);
+      // log.info(`查询联系人:${testUUid}`);
+      // log.info(`lookupConversationWithoutUUid test:${thingApp}`);
 
+      // 测试mpin
+      // const mpinApp = new MPINAPP();
+      // log.info(`策划:${mpinApp.generateMasterKey()}`);
       let serverLookup = '';
       if (options.e164 === '+8615051510552') {
         serverLookup = 'fafc1a9a-b838-48c5-9169-850e6512463a';
       } else if (options.e164 === '+8615051510553') {
         serverLookup = 'e9e8feff-8a3e-4ae3-bb4f-7b141d87c61c';
+      } else if (options.e164 === '+8615190000000') {
+        serverLookup = '16d5d23d-8d90-49bf-9a20-726481ba87a9';
+      } else if (options.e164 === '+8615051510561') {
+        serverLookup = '0c8b59e4-4c47-43b9-9471-1f672bcb5cb0';
+      } else if (options.e164 === '+8615051510559') {
+        serverLookup = '8f5dfbf6-8941-4456-b3b7-f3a04725cfb0';
       } else {
         serverLookup = '';
       }

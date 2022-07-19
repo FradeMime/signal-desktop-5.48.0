@@ -23,6 +23,7 @@ import type { RemoveAllConfiguration } from '../types/RemoveAllConfiguration';
 import type { LoggerType } from '../types/Logging';
 import type { ReadStatus } from '../messages/MessageReadStatus';
 
+// 接口定义与导出
 export type AttachmentDownloadJobTypeType =
   | 'long-message'
   | 'attachment'

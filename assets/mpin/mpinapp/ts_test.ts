@@ -216,6 +216,15 @@
 // }
 
 // module
-export interface SomeInterface{
-    print()；
-}
+// export interface SomeInterface{
+//     print()；
+// }
+
+
+// import { MPINAPP } from './mpinapp'
+const MPINAPP = require('./mpinapp');
+let mpin = new MPINAPP();
+console.log(`策划:${mpin.generateMasterKey()}`);
+mpin.createClientID('testUser@miracl.com');
+mpin.generateServerSecretKey();
+mpin.generateClientSecretKey();

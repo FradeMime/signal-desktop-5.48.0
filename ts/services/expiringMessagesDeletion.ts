@@ -8,6 +8,7 @@ import { clearTimeoutIfNecessary } from '../util/clearTimeoutIfNecessary';
 import { sleep } from '../util/sleep';
 import { SECOND } from '../util/durations';
 
+// 数据自动销毁服务
 class ExpiringMessagesDeletionService {
   public update: typeof this.checkExpiringMessages;
 

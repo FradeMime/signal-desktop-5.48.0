@@ -16,4 +16,9 @@ const appUserModelId = `org.whispersystems.${packageJson.name}`;
 console.log('Set Windows Application User Model ID (AUMID)', {
   appUserModelId,
 });
+// 输出node  electron  node_module_version版本
+console.log(`Node Version:${process.versions.node}`);
+console.log(`Electron Version:${process.versions.electron}`);
+console.log(`Node_Module_Version:${process.versions.modules}`);
+
 app.setAppUserModelId(appUserModelId);

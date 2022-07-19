@@ -25,10 +25,10 @@
 // }
 
 
-export class MPINAPP{
-    constructor();
-    generateMasterKey(): void;
-    createClientID(clientId: any): void;
-    generateServerSecretKey(): void;
-    generateClientSecretKey(): void;
-}
+// export class MPINAPP{
+//     constructor();
+//     generateMasterKey(): string;
+//     createClientID(clientId: any): void;
+//     generateServerSecretKey(): void;
+//     generateClientSecretKey(): void;
+// }

@@ -1,45 +1,60 @@
 // var assert = require('assert');
 var fs = require('fs');
-eval(fs.readFileSync('../js/DBIG.js') + '');
-eval(fs.readFileSync('../js/BIG.js') + '');
-eval(fs.readFileSync('../js/ROM.js') + '');
-eval(fs.readFileSync('../js/HASH.js') + '');
-eval(fs.readFileSync('../js/RAND.js') + '');
-eval(fs.readFileSync('../js/FP.js') + '');
-eval(fs.readFileSync('../js/FP2.js') + '');
-eval(fs.readFileSync('../js/ECP.js') + '');
-eval(fs.readFileSync('../js/ECP2.js') + '');
-eval(fs.readFileSync('../js/PAIR.js') + '');
-eval(fs.readFileSync('../js/MPIN.js') + '');
-var MPINAPP = function(){
-    // this.CLIENT_ID = '';
-    this.CLIENT_ID = [];
-    this.HCID=[];
-    this.G1 = [];
-    this.G2 = [];
-    this.PERMIT = [];
+eval(fs.readFileSync('/home/leiqiu/Desktop/Signal-Desktop/assets/mpin/js/DBIG.js') + '');
+eval(fs.readFileSync('/home/leiqiu/Desktop/Signal-Desktop/assets/mpin/js/BIG.js') + '');
+eval(fs.readFileSync('/home/leiqiu/Desktop/Signal-Desktop/assets/mpin/js/ROM.js') + '');
+eval(fs.readFileSync('/home/leiqiu/Desktop/Signal-Desktop/assets/mpin/js/HASH.js') + '');
+eval(fs.readFileSync('/home/leiqiu/Desktop/Signal-Desktop/assets/mpin/js/RAND.js') + '');
+eval(fs.readFileSync('/home/leiqiu/Desktop/Signal-Desktop/assets/mpin/js/FP.js') + '');
+eval(fs.readFileSync('/home/leiqiu/Desktop/Signal-Desktop/assets/mpin/js/FP2.js') + '');
+eval(fs.readFileSync('/home/leiqiu/Desktop/Signal-Desktop/assets/mpin/js/ECP.js') + '');
+eval(fs.readFileSync('/home/leiqiu/Desktop/Signal-Desktop/assets/mpin/js/ECP2.js') + '');
+eval(fs.readFileSync('/home/leiqiu/Desktop/Signal-Desktop/assets/mpin/js/PAIR.js') + '');
+eval(fs.readFileSync('/home/leiqiu/Desktop/Signal-Desktop/assets/mpin/js/MPIN.js') + '');
 
-    this.S= [];
-    this.SST=[];
-    this.TOKEN=[];
-    this.PIN = 0;
-    this.DATE = 0;
+const DBIG = require('../js/DBIG')
+const BIG = require('../js/BIG')
+const FP = require('../js/FP')
+const ROM = require('../js/ROM')
+const HASH = require('../js/HASH')
+const RAND = require('../js/RAND')
+const AES = require('../js/AES')
+const GCM = require('../js/GCM')
+const ECP = require('../js/ECP')
+const FP2 = require('../js/FP2')
+const ECP2 = require('../js/ECP2')
+const FP4 = require('../js/FP4')
+const FP12 = require('../js/FP12')
+const PAIR = require('../js/PAIR')
+const MPIN = require('../js/MPIN')
 
-    // R & W used session secret key
-    this.R = [];
-    this.W = [];
-
-    this.nIter = 100;
+export class MPINAPP{
+    constractor(){
+        this.CLIENT_ID = [];
+        this.HCID=[];
+        this.G1 = [];
+        this.G2 = [];
+        this.PERMIT = [];
     
-    this.PINERROR = true;
-    this.PERMITS = true;
-    this.FULL = false;
-    this.TIME_FUNCTIONS = false;
-};
-MPINAPP.prototype = {
-    // Trust Root Master key
-    // DTA生成并保存主密钥S
-    generateMasterKey: function(){
+        this.S= [];
+        this.SST=[];
+        this.TOKEN=[];
+        this.PIN = 0;
+        this.DATE = 0;
+    
+        // R & W used session secret key
+        this.R = [];
+        this.W = [];
+    
+        this.nIter = 100;
+        
+        this.PINERROR = true;
+        this.PERMITS = true;
+        this.FULL = false;
+        this.TIME_FUNCTIONS = false;
+    }
+
+    generateMasterKey (){
         var rng = new RAND();
         rng.clean();
 
@@ -48,31 +63,26 @@ MPINAPP.prototype = {
         rng.seed(100, RAW);
         MPIN.RANDOM_GENERATE(rng, this.S);
         console.log(`Master Secret Key:${MPIN.bytestostring(this.S)}`);
-    },
-    // Hash(client_id)
-    // Client自行生成
-    createClientID: function(clientId){
+        return this.S;
+    }
+
+    static createClientID (clientId){
         console.log(`raw client id:${clientId}`);
         this.CLIENT_ID = MPIN.stringtobytes(clientId);
         this.HCID = MPIN.HASH_ID(this.CLIENT_ID);
         console.log(`CLIENT_ID:${MPIN.bytestostring(this.CLIENT_ID)}`);
-    },
-    // generate server secret key from master key
-    // s·Q
-    // 由DAT运算分发
-    generateServerSecretKey(){
+    }
+
+    static generateServerSecretKey(){
         MPIN.GET_SERVER_SECRET(this.S, this.SST);
         console.log(`server secret key:${MPIN.bytestostring(this.SST)}`);
-    },
-    // generate client secret key from master key
-    // s·HCID = s·H(client_id)
-    // 由DTA运算分发
-    generateClientSecretKey: function(){
+    }
+    static generateClientSecretKey(){
         MPIN.GET_CLIENT_SECRET(this.S, this.HCID, this.TOKEN);
         console.log(`client secret key:${MPIN.bytestostring(this.TOKEN)}`);
-    },
-    // 客户端根据PIN和TOKEN，导出新的TOKEN
-    generateTokenAndPin(pin){
+    }
+
+    static generateTokenAndPin(pin){
         console.log(`raw pin:${pin}`);
         var rtn = MPIN.EXTRACT_PIN(this.CLIENT_ID, pin, this.TOKEN);
         if(rtn != 0)
@@ -100,12 +110,14 @@ MPINAPP.prototype = {
         else
             this.DATE = 0;
         this.PIN = pin;
-    },
-    verifyMPINAccount(){
+    }
+
+
+    static verifyMPINAccount(){
         
-    },
+    }
     // 生成协商秘钥
-    generateSessionSecretKey(){
+    static generateSessionSecretKey(){
         if(this.FULL){
             if(this.TIME_FUNCTIONS){
                 var start = new Date().getTime();
@@ -117,4 +129,4 @@ MPINAPP.prototype = {
     }
 }
 
-module.exports = MPINAPP
+// module.exports = MPINAPP

@@ -1,7 +1,8 @@
 // Copyright 2022 Signal Messenger, LLC
 // SPDX-License-Identifier: AGPL-3.0-only
-
+// import { execFile } from 'child_process';
 import { isNumber } from 'lodash';
+// import { func2 } from '../../../assets/java/messageCrypto';
 
 import * as Errors from '../../types/errors';
 import type { MessageModel } from '../../models/messages';
@@ -261,6 +262,11 @@ export async function sendNormalMessage(
           return;
         }
 
+        log.info(`body数据:${body}`);
+        // const friendId = conversation.get('e164');
+        // const anotherEncryptMsg = await func2(body, friendId);
+        // log.info(`测试回调:${anotherEncryptMsg}`);
+
         log.info('sending direct message');
         innerPromise = messaging.sendMessageToIdentifier({
           attachments,
@@ -271,6 +277,7 @@ export async function sendNormalMessage(
           groupId: undefined,
           identifier: recipientIdentifiersWithoutMe[0],
           messageText: body,
+          // messageText: anotherEncryptMsg,
           options: sendOptions,
           preview,
           profileKey,
